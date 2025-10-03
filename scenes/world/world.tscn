@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdstsqvisrcbb"]
+
+[ext_resource type="PackedScene" uid="uid://c17e7ny0b65ei" path="res://objs/pause_menu/pause_menu.tscn" id="1_dphjl"]
+
+[sub_resource type="Environment" id="Environment_4rhad"]
+background_mode = 1
+
+[sub_resource type="TorusMesh" id="TorusMesh_4rhad"]
+
+[node name="world" type="Node3D"]
+
+[node name="environment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4rhad")
+
+[node name="camera" type="Camera3D" parent="."]
+
+[node name="light" type="DirectionalLight3D" parent="."]
+
+[node name="pause_menu" parent="." instance=ExtResource("1_dphjl")]
+
+[node name="obj" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.7192549, -0.69474626, 0, 0.69474626, 0.7192549, 0, 0, -4.9913483)
+mesh = SubResource("TorusMesh_4rhad")
