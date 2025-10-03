@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://bayc08vbvk1bo"]
+
+[ext_resource type="Script" uid="uid://bswyxtx04o8yl" path="res://objs/ship/ship_camera.gd" id="1_a061m"]
+[ext_resource type="Script" uid="uid://erj2cfpfmag4" path="res://objs/ship/ship.gd" id="1_lmpqp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_18gon"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_lmpqp"]
+
+[node name="node" type="Node3D"]
+script = ExtResource("1_a061m")
+
+[node name="ship" type="CharacterBody3D" parent="."]
+script = ExtResource("1_lmpqp")
+
+[node name="collision" type="CollisionShape3D" parent="ship"]
+shape = SubResource("BoxShape3D_18gon")
+
+[node name="mesh" type="MeshInstance3D" parent="ship"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("PrismMesh_lmpqp")
+
+[node name="camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7801034, 4.9419994)

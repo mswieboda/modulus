@@ -1,23 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdstsqvisrcbb"]
+[gd_scene load_steps=8 format=3 uid="uid://cdstsqvisrcbb"]
 
+[ext_resource type="Texture2D" uid="uid://b6eurqgu20lbe" path="res://scenes/world/space.hdr" id="1_1fp7r"]
 [ext_resource type="PackedScene" uid="uid://c17e7ny0b65ei" path="res://objs/pause_menu/pause_menu.tscn" id="1_dphjl"]
+[ext_resource type="PackedScene" uid="uid://bayc08vbvk1bo" path="res://objs/ship/ship.tscn" id="2_sl2e5"]
 
-[sub_resource type="Environment" id="Environment_4rhad"]
-background_mode = 1
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6m72w"]
+panorama = ExtResource("1_1fp7r")
+energy_multiplier = 69.0
+
+[sub_resource type="Sky" id="Sky_v5dby"]
+sky_material = SubResource("PanoramaSkyMaterial_6m72w")
+
+[sub_resource type="Environment" id="Environment_t5ptc"]
+background_mode = 2
+sky = SubResource("Sky_v5dby")
 
 [sub_resource type="TorusMesh" id="TorusMesh_4rhad"]
 
 [node name="world" type="Node3D"]
 
 [node name="environment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_4rhad")
-
-[node name="camera" type="Camera3D" parent="."]
-
-[node name="light" type="DirectionalLight3D" parent="."]
+environment = SubResource("Environment_t5ptc")
 
 [node name="pause_menu" parent="." instance=ExtResource("1_dphjl")]
 
 [node name="obj" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.7192549, -0.69474626, 0, 0.69474626, 0.7192549, 0, 0, -4.9913483)
 mesh = SubResource("TorusMesh_4rhad")
+
+[node name="node" parent="." instance=ExtResource("2_sl2e5")]
