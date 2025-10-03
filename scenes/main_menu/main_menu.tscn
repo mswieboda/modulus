@@ -1,10 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cexdy8g5e0iyk"]
+[gd_scene load_steps=3 format=3 uid="uid://cexdy8g5e0iyk"]
 
 [ext_resource type="Script" uid="uid://bwfxihy33e4ss" path="res://scenes/main_menu/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="Texture2D" uid="uid://b6eurqgu20lbe" path="res://scenes/world/space.hdr" id="2_0ebjn"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_l6cm7"]
-font_size = 96
 
 [node name="main_menu" type="Control"]
 layout_mode = 3
@@ -39,20 +36,23 @@ offset_right = 4.0
 offset_bottom = 23.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 32
 alignment = 1
 
 [node name="title" type="Label" parent="vbox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_font_sizes/font_size = 96
 text = "modulus"
-label_settings = SubResource("LabelSettings_l6cm7")
 
 [node name="start" type="Button" parent="vbox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_font_sizes/font_size = 48
 text = "start"
 
 [node name="quit" type="Button" parent="vbox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_font_sizes/font_size = 48
 text = "quit"

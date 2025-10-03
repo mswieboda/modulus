@@ -1,9 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://c17e7ny0b65ei"]
+[gd_scene load_steps=2 format=3 uid="uid://c17e7ny0b65ei"]
 
 [ext_resource type="Script" uid="uid://c7r3dr65clu81" path="res://objs/pause_menu/pause_menu.gd" id="1_nwd4d"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_nwd4d"]
-font_size = 64
 
 [node name="pause_menu" type="Control"]
 process_mode = 3
@@ -43,25 +40,29 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 16
 alignment = 1
 
 [node name="title" type="Label" parent="container/panel/vbox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_font_sizes/font_size = 72
 text = "PAUSED"
-label_settings = SubResource("LabelSettings_nwd4d")
 
 [node name="resume" type="Button" parent="container/panel/vbox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_font_sizes/font_size = 32
 text = "resume"
 
 [node name="settings" type="Button" parent="container/panel/vbox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_font_sizes/font_size = 32
 text = "settings"
 
 [node name="quit" type="Button" parent="container/panel/vbox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_font_sizes/font_size = 32
 text = "quit"
