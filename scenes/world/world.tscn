@@ -28,4 +28,4 @@ environment = SubResource("Environment_t5ptc")
 transform = Transform3D(1, 0, 0, 0, 0.7192549, -0.69474626, 0, 0.69474626, 0.7192549, 0, 0, -4.9913483)
 mesh = SubResource("TorusMesh_4rhad")
 
-[node name="node" parent="." instance=ExtResource("2_sl2e5")]
+[node name="ship" parent="." instance=ExtResource("2_sl2e5")]

@@ -7,7 +7,7 @@
 
 [sub_resource type="PrismMesh" id="PrismMesh_lmpqp"]
 
-[node name="node" type="Node3D"]
+[node name="ship" type="Node3D"]
 script = ExtResource("1_a061m")
 follow_smoothness = 3.0
 
