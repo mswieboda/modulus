@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cexdy8g5e0iyk"]
+[gd_scene load_steps=4 format=3 uid="uid://cexdy8g5e0iyk"]
 
 [ext_resource type="Script" uid="uid://bwfxihy33e4ss" path="res://scenes/main_menu/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="Texture2D" uid="uid://b6eurqgu20lbe" path="res://scenes/world/space.hdr" id="2_0ebjn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l6cm7"]
 font_size = 96
@@ -13,6 +14,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l6cm7")
+
+[node name="background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_0ebjn")
+expand_mode = 3
+stretch_mode = 5
 
 [node name="vbox" type="VBoxContainer" parent="."]
 layout_mode = 1
