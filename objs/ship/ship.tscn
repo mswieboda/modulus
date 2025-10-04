@@ -3,32 +3,23 @@
 [ext_resource type="Script" uid="uid://bswyxtx04o8yl" path="res://objs/ship/ship_camera.gd" id="1_a061m"]
 [ext_resource type="Script" uid="uid://erj2cfpfmag4" path="res://objs/ship/ship.gd" id="1_lmpqp"]
 [ext_resource type="PackedScene" uid="uid://d2a0t4o0m4scl" path="res://objs/ship/ship.blend" id="3_g2y22"]
+[ext_resource type="Script" uid="uid://bec2iae41gejy" path="res://objs/ship/camera.gd" id="4_4geug"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_18gon"]
 
-[sub_resource type="PrismMesh" id="PrismMesh_lmpqp"]
-
 [node name="ship" type="Node3D"]
 script = ExtResource("1_a061m")
-offset = Vector3(0, 7, 19)
-follow_smoothness = 3.0
 
-[node name="ship" type="CharacterBody3D" parent="."]
+[node name="ship_body" type="CharacterBody3D" parent="."]
 script = ExtResource("1_lmpqp")
-speed = 50.0
-strafe_speed = 5.0
-reverse_speed = 15.0
-acceleration = 300.0
 
-[node name="collision" type="CollisionShape3D" parent="ship"]
+[node name="collision" type="CollisionShape3D" parent="ship_body"]
 shape = SubResource("BoxShape3D_18gon")
 
-[node name="mesh_old" type="MeshInstance3D" parent="ship"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
-visible = false
-mesh = SubResource("PrismMesh_lmpqp")
+[node name="rotation_pivot" type="Node3D" parent="ship_body"]
 
-[node name="mesh" parent="ship" instance=ExtResource("3_g2y22")]
+[node name="mesh" parent="ship_body/rotation_pivot" instance=ExtResource("3_g2y22")]
 
-[node name="camera" type="Camera3D" parent="."]
+[node name="camera" type="Camera3D" parent="ship_body"]
 transform = Transform3D(1, 0, 0, 0, 0.99254614, 0.12186935, 0, -0.12186935, 0.99254614, 0, 7, 19)
+script = ExtResource("4_4geug")
