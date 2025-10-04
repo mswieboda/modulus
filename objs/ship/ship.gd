@@ -6,16 +6,25 @@ extends Node3D
 @export var friction: float = 10.0
 @export var rotation_speed: float = 1000
 @export var camera_smoothness: float = 3.0
+@export var ship_laser_max_distance: float = 300.0
+@export var mining_damage_per_second: float = 50.0
+@export var debug_draw: bool = false  # Enable to see the ray
 
 @onready var ship: CharacterBody3D = $ship_body
-@onready var ship_laser: MeshInstance3D = $ship_body/mine_gun/laser
+@onready var ship_laser: Node3D = $ship_body/laser_raycast_point
+@onready var ship_laser_mesh: Node3D = $ship_body/mine_gun/laser
 @onready var rotation_pivot: Node3D = $rotation_pivot
 @onready var camera: Camera3D = get_node("rotation_pivot/camera")
 
 var view_center: Vector2 = Vector2()
+var debug_line: MeshInstance3D
 
 func _ready() -> void:
     view_center = get_viewport().get_visible_rect().size / 2
+
+    if debug_draw:
+        debug_line = MeshInstance3D.new()
+        add_child(debug_line)
 
 func _physics_process(delta: float):
     rotation(delta)
@@ -25,6 +34,7 @@ func _physics_process(delta: float):
     ship.move_and_slide()
 
     mine_laser_input()
+    raycast_from_laser(delta)
 
 func rotation(delta: float):
     var mouse_pos = get_viewport().get_mouse_position()
@@ -83,6 +93,73 @@ func move_to_ship(delta: float):
 
 func mine_laser_input():
     if Input.is_action_just_pressed("mine"):
-        ship_laser.show()
+        ship_laser_mesh.show()
     elif Input.is_action_just_released("mine"):
-        ship_laser.hide()
+        ship_laser_mesh.hide()
+
+func raycast_from_laser(delta: float):
+    if not ship_laser_mesh.visible:
+        return
+
+    var ray_origin = ship_laser.global_position
+    var ray_direction = -ship_laser.global_transform.basis.z
+    var ray_end = ray_origin + ray_direction * ship_laser_max_distance
+
+    var space_state = get_world_3d().direct_space_state
+    var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
+
+    # collision mask for all, switch to asteroids mask if more objs?
+    query.collision_mask = 0xFFFFFFFF
+
+    var ship_body = get_node_or_null("ship_body")
+    if ship_body:
+        query.exclude = [ship_body.get_rid()]
+
+    var result = space_state.intersect_ray(query)
+
+    var length = ray_origin.distance_to(ray_end)
+    ship_laser_mesh.global_position = ray_origin
+    ship_laser_mesh.position.y = length / 2
+    ship_laser_mesh.scale.y = length
+
+    if debug_draw and debug_line:
+        var start_position = ray_origin + ray_direction # * ship_laser_max_distance / 2
+        draw_debug_line(start_position, ray_end if not result else result.position,
+                       Color.GREEN if result else Color.RED)
+
+    if result:
+        on_laser_hit(result, delta)
+    else:
+        remove_laser_mesh_material_override()
+
+func on_laser_hit(hit_info: Dictionary, delta: float):
+    var hit_object = hit_info.collider
+
+    if hit_object.has_method("mine"):
+        # TODO: some visual progress bar, circlular like BoTW sprint, or NMS mining
+        #       of amount of mined asteroid decreasing
+        hit_object.mine(mining_damage_per_second * delta)
+        change_laser_mesh_material_to_green()
+
+func draw_debug_line(from: Vector3, to: Vector3, color: Color):
+    var immediate_mesh = ImmediateMesh.new()
+    immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
+    immediate_mesh.surface_add_vertex(from)
+    immediate_mesh.surface_add_vertex(to)
+    immediate_mesh.surface_end()
+
+    debug_line.mesh = immediate_mesh
+
+    var material = StandardMaterial3D.new()
+    material.albedo_color = color
+    material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+    debug_line.material_override = material
+
+func change_laser_mesh_material_to_green():
+    var material = StandardMaterial3D.new()
+    material.albedo_color = Color.GREEN
+    ship_laser_mesh.material_override = material
+
+func remove_laser_mesh_material_override():
+    if ship_laser_mesh.material_override:
+        ship_laser_mesh.material_override = null

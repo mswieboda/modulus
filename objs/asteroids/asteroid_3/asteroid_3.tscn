@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://bnnyncqr0diqx"]
+[gd_scene load_steps=4 format=3 uid="uid://bnnyncqr0diqx"]
 
+[ext_resource type="Script" uid="uid://cibg4qira5ba5" path="res://objs/asteroids/asteroid.gd" id="1_dshhr"]
 [ext_resource type="PackedScene" uid="uid://d2nbrjguj4ds" path="res://objs/asteroids/asteroid_3/asteroid_3.blend" id="1_xd8ws"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ceuqo"]
 radius = 11.0
 
 [node name="astroid_3" type="StaticBody3D"]
+script = ExtResource("1_dshhr")
 
 [node name="collision" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_ceuqo")
