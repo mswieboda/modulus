@@ -1,9 +1,36 @@
-[gd_scene load_steps=4 format=3 uid="uid://bayc08vbvk1bo"]
+[gd_scene load_steps=7 format=3 uid="uid://bayc08vbvk1bo"]
 
 [ext_resource type="Script" uid="uid://erj2cfpfmag4" path="res://objs/ship/ship.gd" id="1_lmpqp"]
 [ext_resource type="PackedScene" uid="uid://d2a0t4o0m4scl" path="res://objs/ship/ship.blend" id="3_g2y22"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_18gon"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_a061m"]
+top_radius = 0.1
+bottom_radius = 0.3
+height = 0.75
+cap_top = false
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_a061m"]
+radius = 0.1
+height = 100.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a061m"]
+albedo_color = Color(1, 0.4392157, 0, 1)
+emission = Color(1, 0, 0, 1)
+rim_tint = 1.0
+clearcoat_enabled = true
+subsurf_scatter_enabled = true
+subsurf_scatter_strength = 0.5
+subsurf_scatter_transmittance_enabled = true
+subsurf_scatter_transmittance_color = Color(1, 0, 0, 1)
+subsurf_scatter_transmittance_depth = 9.0
+subsurf_scatter_transmittance_boost = 0.7
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+stencil_flags = 2
+stencil_color = Color(1, 0, 0, 1)
+stencil_outline_thickness = 0.03
 
 [node name="ship" type="Node3D"]
 script = ExtResource("1_lmpqp")
@@ -14,6 +41,16 @@ script = ExtResource("1_lmpqp")
 shape = SubResource("BoxShape3D_18gon")
 
 [node name="mesh" parent="ship_body" instance=ExtResource("3_g2y22")]
+
+[node name="mine_gun" type="MeshInstance3D" parent="ship_body"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.39069366, -9.379976)
+mesh = SubResource("CylinderMesh_a061m")
+
+[node name="laser" type="MeshInstance3D" parent="ship_body/mine_gun"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_a061m")
+surface_material_override/0 = SubResource("StandardMaterial3D_a061m")
 
 [node name="rotation_pivot" type="Node3D" parent="."]
 

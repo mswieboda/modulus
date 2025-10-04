@@ -8,6 +8,7 @@ extends Node3D
 @export var camera_smoothness: float = 3.0
 
 @onready var ship: CharacterBody3D = $ship_body
+@onready var ship_laser: MeshInstance3D = $ship_body/mine_gun/laser
 @onready var rotation_pivot: Node3D = $rotation_pivot
 @onready var camera: Camera3D = get_node("rotation_pivot/camera")
 
@@ -22,6 +23,8 @@ func _physics_process(delta: float):
     movement(delta)
     move_to_ship(delta)
     ship.move_and_slide()
+
+    mine_laser_input()
 
 func rotation(delta: float):
     var mouse_pos = get_viewport().get_mouse_position()
@@ -39,7 +42,7 @@ func rotation_pivot_follow_rotation(delta: float):
     var lerp_weight = camera_smoothness * delta
     rotation_pivot.global_transform = rotation_pivot.global_transform.interpolate_with(ship.global_transform, lerp_weight)
 
-func movement(delta: float):
+func movement(_delta: float):
     # Get input direction
     var input_dir := Input.get_vector("strafe_left", "strafe_right", "move_forward", "move_backward")
 
@@ -77,3 +80,9 @@ func move_to_ship(delta: float):
     var lerp_weight = camera_smoothness * delta
 
     rotation_pivot.global_position = rotation_pivot.global_position.lerp(target, lerp_weight)
+
+func mine_laser_input():
+    if Input.is_action_just_pressed("mine"):
+        ship_laser.show()
+    elif Input.is_action_just_released("mine"):
+        ship_laser.hide()
