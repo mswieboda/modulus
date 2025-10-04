@@ -63,10 +63,13 @@ func movement(delta: float):
         # Apply velocity in all 3 axes
         ship.velocity = move_direction * current_speed
     else:
-        # Apply friction to all axes in 3D space
-        ship.velocity.x = move_toward(ship.velocity.x, 0, friction * delta)
-        ship.velocity.y = move_toward(ship.velocity.y, 0, friction * delta)
-        ship.velocity.z = move_toward(ship.velocity.z, 0, friction * delta)
+        ship.velocity = Vector3.ZERO
+
+        # TODO: slow ship down using friction, but this was making the ship move too much
+        #       when only turning/rotating the ship with the mouse, which isn't what we want
+        # ship.velocity.x = move_toward(ship.velocity.x, 0, friction * delta)
+        # ship.velocity.y = move_toward(ship.velocity.y, 0, friction * delta)
+        # ship.velocity.z = move_toward(ship.velocity.z, 0, friction * delta)
 
 func move_to_ship(delta: float):
     # Move smoothly
