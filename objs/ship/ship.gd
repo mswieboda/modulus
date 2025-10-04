@@ -9,6 +9,13 @@ extends CharacterBody3D
 @onready var rotation_pivot: Node3D = $rotation_pivot
 @onready var camera: Camera3D = $camera
 
+var viewCenter: Vector2
+
+func _ready():
+  viewCenter = get_viewport().get_visible_rect().size
+  viewCenter = viewCenter / 2
+  pass
+
 # Store previous rotation for banking calculation
 var previous_yaw: float = 0.0
 
@@ -18,34 +25,11 @@ func _physics_process(delta: float):
     move_and_slide()
 
 func rotation(delta: float):
-    var mouse_pos = get_viewport().get_mouse_position()
-    var from = camera.project_ray_origin(mouse_pos)
-    var to = from + camera.project_ray_normal(mouse_pos)
+  var mousePos = get_viewport().get_mouse_position()
+  var mouseFromCent = viewCenter - mousePos
+  rotation_pivot.rotate_y(mouseFromCent.x * delta / 100)
+  rotation_pivot.rotate_x(mouseFromCent.y * delta / 100)
 
-    var plane = Plane(Vector3.UP, global_position.y)
-    var intersection = plane.intersects_ray(from, to - from)
-
-    if intersection:
-        var direction = intersection - global_position
-
-        if direction.length() > 0.1:
-            var target_yaw = atan2(direction.x, direction.z)
-            var old_yaw = rotation_pivot.rotation.y
-
-            rotation_pivot.rotation.y = lerp_angle(rotation_pivot.rotation.y, target_yaw, rotation_speed * delta)
-
-            var horizontal_distance = Vector2(direction.x, direction.z).length()
-            var target_pitch = -atan2(direction.y, horizontal_distance)
-            target_pitch = clamp(target_pitch, deg_to_rad(-max_tilt_angle), deg_to_rad(max_tilt_angle))
-            rotation_pivot.rotation.x = lerp_angle(rotation_pivot.rotation.x, target_pitch, rotation_speed * delta)
-
-            var yaw_delta = angle_difference(rotation_pivot.rotation.y, old_yaw)
-            var target_roll = -yaw_delta * roll_strength * 100.0
-            target_roll = clamp(target_roll, deg_to_rad(-max_tilt_angle), deg_to_rad(max_tilt_angle))
-            rotation_pivot.rotation.z = lerp_angle(rotation_pivot.rotation.z, target_roll, rotation_speed * delta)
-    else:
-        rotation_pivot.rotation.x = lerp_angle(rotation_pivot.rotation.x, 0.0, rotation_speed * delta * 0.5)
-        rotation_pivot.rotation.z = lerp_angle(rotation_pivot.rotation.z, 0.0, rotation_speed * delta * 0.5)
 
 func movement(delta: float):
     # Move forward in the direction the ship is facing
