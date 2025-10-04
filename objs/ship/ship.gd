@@ -14,10 +14,9 @@ func _physics_process(delta: float):
 
     # apply movement with acceleration/friction
     if direction:
+        var z_speed = speed if direction.z <= 0 else reverse_speed
         velocity.x = move_toward(velocity.x, direction.x * strafe_speed, acceleration * delta)
-
-        # TODO: use `reverse_speed` for a negative direction.z, and `speed` for positive
-        velocity.z = move_toward(velocity.z, direction.z * speed, acceleration * delta)
+        velocity.z = move_toward(velocity.z, direction.z * z_speed, acceleration * delta)
     else:
         velocity.x = move_toward(velocity.x, 0, friction * delta)
         velocity.z = move_toward(velocity.z, 0, friction * delta)
