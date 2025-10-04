@@ -1,61 +1,23 @@
 extends CharacterBody3D
 
 # movement
-@export var speed: float = 35.0
+@export var speed: float = 50.0
 @export var strafe_speed: float = 10.0
 @export var reverse_speed: float = 15.0
 @export var friction: float = 10.0
-@export var rotation_speed: float = 5.0
-@export var max_pitch_angle: float = 45.0
-@export var max_roll_angle: float = 30.0
-@export var roll_strength: float = 1.0
+@export var camera_match_speed: float = 3.0
 
-@onready var rotation_pivot: Node3D = $rotation_pivot
-@onready var camera: Camera3D = $camera
-
-var view_center: Vector2
-
-func _ready():
-    view_center = get_viewport().get_visible_rect().size / 2
-
-# Store previous rotation for banking calculation
-var previous_yaw: float = 0.0
+@onready var rotation_pivot: Node3D = get_node("../rotation_pivot")
+@onready var camera: Camera3D = get_node("../rotation_pivot/camera")
 
 func _physics_process(delta: float):
-    rotation(delta)
+    match_rotation_pivot(delta)
     movement(delta)
-    prints(">>> pos:", global_position)
     move_and_slide()
 
-func get_mouse_position_from_camera(distance_from_camera: float = 500.0) -> Vector3:
-    var mouse_pos = get_viewport().get_mouse_position()
-    var from = camera.project_ray_origin(mouse_pos)
-
-    var direction = camera.project_ray_normal(mouse_pos)
-
-    # Simply return point along ray at desired distance
-    return from + direction * distance_from_camera
-
-func rotation(delta: float):
-    var mouse_3d_pos = get_mouse_position_from_camera()
-    var direction = mouse_3d_pos - global_position
-
-    if direction.length() > 0.1:
-        var target_yaw = atan2(-direction.x, -direction.z)
-        var old_yaw = rotation_pivot.rotation.y
-
-        rotation_pivot.rotation.y = lerp_angle(rotation_pivot.rotation.y, target_yaw, rotation_speed * delta)
-
-        var horizontal_distance = Vector2(direction.x, direction.z).length()
-        var target_pitch = atan2(direction.y, horizontal_distance)
-        target_pitch = clamp(target_pitch, deg_to_rad(-max_pitch_angle), deg_to_rad(max_pitch_angle))
-        rotation_pivot.rotation.x = lerp_angle(rotation_pivot.rotation.x, target_pitch, rotation_speed * delta)
-
-        var yaw_delta = angle_difference(rotation_pivot.rotation.y, old_yaw)
-        var target_roll = -yaw_delta * roll_strength * 100.0
-        target_roll = clamp(target_roll, deg_to_rad(-max_roll_angle), deg_to_rad(max_roll_angle))
-        rotation_pivot.rotation.z = lerp_angle(rotation_pivot.rotation.z, target_roll, rotation_speed * delta)
-
+func match_rotation_pivot(delta: float):
+    var lerp_weight = camera_match_speed * delta
+    global_transform = global_transform.interpolate_with(rotation_pivot.global_transform, lerp_weight)
 
 func movement(delta: float):
     # Get input direction

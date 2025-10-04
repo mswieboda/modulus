@@ -14,10 +14,10 @@ script = ExtResource("1_lmpqp")
 [node name="collision" type="CollisionShape3D" parent="ship_body"]
 shape = SubResource("BoxShape3D_18gon")
 
-[node name="rotation_pivot" type="Node3D" parent="ship_body"]
+[node name="mesh" parent="ship_body" instance=ExtResource("3_g2y22")]
 
-[node name="mesh" parent="ship_body/rotation_pivot" instance=ExtResource("3_g2y22")]
+[node name="rotation_pivot" type="Node3D" parent="."]
 
-[node name="camera" type="Camera3D" parent="ship_body"]
-transform = Transform3D(1, 0, 0, 0, 0.99254614, 0.12186935, 0, -0.12186935, 0.99254614, 0, 7, 19)
+[node name="camera" type="Camera3D" parent="rotation_pivot"]
+transform = Transform3D(1, 0, 0, 0, 0.99254614, 0.12186935, 0, -0.12186935, 0.99254614, 0, 9, 19)
 script = ExtResource("4_4geug")

@@ -1,19 +1,41 @@
 extends Camera3D
 
-@export var distance: float = 16.0
-@export var height: float = 7.0
-@export var smoothness: float = 3.0
+@export var rotation_speed: float = 1000
 
-@onready var ship: CharacterBody3D = get_parent()
-@onready var visual: Node3D = ship.get_node("rotation_pivot")
+@export var camera_smoothness: float = 3.0
+@export var camera_distance: float = 19.0
+@export var camera_height: float = 10.0
+
+@onready var ship: CharacterBody3D = get_node("../../ship_body")
+@onready var rotation_pivot: Node3D = get_parent()
+
+var view_center: Vector2 = Vector2()
+
+func _ready() -> void:
+    view_center = get_viewport().get_visible_rect().size / 2
+
+    position.y = camera_height
+    position.z = camera_distance
 
 func _process(delta: float) -> void:
-    # Calculate where camera should be
-    var forward = -visual.global_transform.basis.z
-    var target_pos = ship.global_position - forward * distance + Vector3.UP * height
+    rotation(delta)
+    move_to_ship(delta)
 
+func move_to_ship(delta: float):
     # Move smoothly
-    global_position = global_position.lerp(target_pos, smoothness * delta)
+    var target = ship.global_position
+    var lerp_weight = camera_smoothness * delta
 
-    # Look at ship
-    look_at(ship.global_position + Vector3.UP, Vector3.UP)
+    rotation_pivot.global_position = rotation_pivot.global_position.lerp(target, lerp_weight)
+
+func rotation(delta: float):
+    var mouse_pos = get_viewport().get_mouse_position()
+    var transform_basis = rotation_pivot.global_transform.basis
+
+    # PITCH (up/down)
+    var direction_pitch = view_center.y - mouse_pos.y
+    rotation_pivot.global_rotate(transform_basis.x, direction_pitch * delta / rotation_speed)
+
+    # YAW (left/right)
+    var direction_yaw = view_center.x - mouse_pos.x
+    rotation_pivot.global_rotate(transform_basis.y, direction_yaw * delta / rotation_speed)
