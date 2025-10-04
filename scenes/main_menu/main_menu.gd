@@ -15,10 +15,18 @@ func _ready():
     # Optional: Set button focus for keyboard navigation
     start_button.grab_focus()
 
+func _input(event: InputEvent) -> void:
+    # quit with ESC key
+    if event.is_action_pressed("ui_cancel"):  # ESC is mapped to ui_cancel by default
+        quit()
+
 func _on_start_button_pressed() -> void:
     # Load and change to the game scene
     get_tree().change_scene_to_file(WORLD_SCENE)
 
 func _on_quit_button_pressed() -> void:
+    quit()
+
+func quit():
     # Quit the game
     get_tree().quit()
