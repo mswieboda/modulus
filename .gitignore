@@ -4,3 +4,6 @@
 *.import
 
 .DS_Store
+
+# Blender
+*.blend1
