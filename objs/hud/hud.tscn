@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://0w7onulq4gln"]
+[gd_scene load_steps=3 format=3 uid="uid://0w7onulq4gln"]
+
+[ext_resource type="Script" uid="uid://chihyan8iw3ej" path="res://objs/hud/hud.gd" id="1_h2wxv"]
+[ext_resource type="Texture2D" uid="uid://tgx72tt5is13" path="res://assets/crosshair.png" id="2_ak035"]
 
 [node name="hud" type="Control"]
 layout_mode = 3
@@ -8,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("1_h2wxv")
 
 [node name="margin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -49,7 +53,15 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="crosshair" type="ColorRect" parent="center"]
-custom_minimum_size = Vector2(16, 16)
+[node name="crosshair_color" type="ColorRect" parent="center"]
+visible = false
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 color = Color(1, 0, 0, 0.49803922)
+
+[node name="crosshair" type="TextureRect" parent="center"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("2_ak035")
+expand_mode = 1
+stretch_mode = 5

@@ -18,6 +18,9 @@ func _ready():
     # Hide menu initially
     hide()
 
+    # Hide cursor for gameplay
+    Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+
 func _input(event: InputEvent) -> void:
     # Toggle pause menu with ESC key
     if event.is_action_pressed("ui_cancel"):  # ESC is mapped to ui_cancel by default
@@ -35,10 +38,16 @@ func pause_game() -> void:
     get_tree().paused = true
     resume_button.grab_focus()
 
+    # Show cursor for menu interaction
+    Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
 func resume_game() -> void:
     # Hide menu and unpause the game
     hide()
     get_tree().paused = false
+
+    # Hide cursor for gameplay
+    Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 func _on_resume_button_pressed() -> void:
     resume_game()
@@ -55,3 +64,6 @@ func _on_quit_button_pressed() -> void:
     get_tree().paused = false
     # Return to main menu
     get_tree().change_scene_to_file(MAIN_MENU_SCENE)
+
+    # Show cursor for menu interaction
+    Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
