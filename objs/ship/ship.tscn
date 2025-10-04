@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=3 uid="uid://bayc08vbvk1bo"]
+[gd_scene load_steps=5 format=3 uid="uid://bayc08vbvk1bo"]
 
-[ext_resource type="Script" uid="uid://bswyxtx04o8yl" path="res://objs/ship/ship_camera.gd" id="1_a061m"]
 [ext_resource type="Script" uid="uid://erj2cfpfmag4" path="res://objs/ship/ship.gd" id="1_lmpqp"]
 [ext_resource type="PackedScene" uid="uid://d2a0t4o0m4scl" path="res://objs/ship/ship.blend" id="3_g2y22"]
 [ext_resource type="Script" uid="uid://bec2iae41gejy" path="res://objs/ship/camera.gd" id="4_4geug"]
@@ -8,7 +7,6 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_18gon"]
 
 [node name="ship" type="Node3D"]
-script = ExtResource("1_a061m")
 
 [node name="ship_body" type="CharacterBody3D" parent="."]
 script = ExtResource("1_lmpqp")
