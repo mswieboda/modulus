@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c17e7ny0b65ei" path="res://objs/pause_menu/pause_menu.tscn" id="1_dphjl"]
 [ext_resource type="PackedScene" uid="uid://bayc08vbvk1bo" path="res://objs/ship/ship.tscn" id="2_sl2e5"]
 [ext_resource type="PackedScene" uid="uid://0w7onulq4gln" path="res://objs/hud/hud.tscn" id="3_6m72w"]
-[ext_resource type="PackedScene" uid="uid://bnnyncqr0diqx" path="res://objs/astroids/astroid3/astroid_3.tscn" id="5_v5dby"]
+[ext_resource type="PackedScene" uid="uid://bnnyncqr0diqx" path="res://objs/asteroids/asteroid_3/asteroid_3.tscn" id="5_v5dby"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6m72w"]
 panorama = ExtResource("1_1fp7r")

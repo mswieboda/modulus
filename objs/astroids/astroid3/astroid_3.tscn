@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bnnyncqr0diqx"]
-
-[ext_resource type="PackedScene" uid="uid://bn6hfrb6prfcu" path="res://objs/astroids/astroid3/astroid3.blend" id="1_xd8ws"]
-
-[node name="astroid3" type="Node3D"]
-
-[node name="astroid3" parent="." instance=ExtResource("1_xd8ws")]

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bt6sslkbyaxss"]
+
+[ext_resource type="PackedScene" uid="uid://dajfchkjenbm4" path="res://objs/asteroids/asteroid_2/asteroid_2.blend" id="1_xyupa"]
+
+[node name="asteroid_2" type="Node3D"]
+
+[node name="asteroid_2" parent="." instance=ExtResource("1_xyupa")]
