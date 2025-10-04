@@ -4,6 +4,9 @@ var start = -10.0
 var end = 10.0
 
 @onready var asteroid_1 = preload("res://objs/asteroids/asteroid_1/asteroid_1.tscn")
+@onready var asteroid_2 = preload("res://objs/asteroids/asteroid_2/asteroid_2.tscn")
+@onready var asteroid_3 = preload("res://objs/asteroids/asteroid_3/asteroid_3.tscn")
+@onready var asteroids = [asteroid_1, asteroid_2, asteroid_3]
 
 var asteroid2
 var asteroid3
@@ -13,6 +16,7 @@ func _ready() -> void:
   generate()
 
 func generate():
+  var new_asteroid
   var weight = 0.0
   var lerp_val = 0.0
   var spawn_loc = Vector3(0,0,0)
@@ -22,4 +26,8 @@ func generate():
       spawn_loc.z = lerp_val
       spawn_loc.y = randf_range(0.0, 20.0) * sin(angle)
       spawn_loc.x = randf_range(0.0, 20.0) * cos(angle)
-      var choice = randi_range(1,3)
+      var choice = randi_range(0,2)
+      new_asteroid = asteroids[choice].instantiate()
+      new_asteroid.position = spawn_loc
+      add_child(new_asteroid)
+      weight += 0.1

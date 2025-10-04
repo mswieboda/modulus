@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cdstsqvisrcbb"]
+[gd_scene load_steps=11 format=3 uid="uid://cdstsqvisrcbb"]
 
 [ext_resource type="Texture2D" uid="uid://b6eurqgu20lbe" path="res://scenes/world/space.hdr" id="1_1fp7r"]
 [ext_resource type="PackedScene" uid="uid://c17e7ny0b65ei" path="res://objs/pause_menu/pause_menu.tscn" id="1_dphjl"]
 [ext_resource type="PackedScene" uid="uid://bayc08vbvk1bo" path="res://objs/ship/ship.tscn" id="2_sl2e5"]
 [ext_resource type="PackedScene" uid="uid://0w7onulq4gln" path="res://objs/hud/hud.tscn" id="3_6m72w"]
 [ext_resource type="PackedScene" uid="uid://bnnyncqr0diqx" path="res://objs/asteroids/asteroid_3/asteroid_3.tscn" id="5_v5dby"]
+[ext_resource type="PackedScene" uid="uid://de4bt5u3jgtp7" path="res://objs/asteroids/asteroid_belt/asetroid_belt.tscn" id="6_t5ptc"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6m72w"]
 panorama = ExtResource("1_1fp7r")
@@ -44,3 +45,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 49.767094)
 
 [node name="astroid3" parent="." instance=ExtResource("5_v5dby")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 35, 0, 0)
+
+[node name="astroid_belt" parent="." instance=ExtResource("6_t5ptc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 128, 0, 0)
