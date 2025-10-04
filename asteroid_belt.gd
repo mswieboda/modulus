@@ -13,9 +13,6 @@ var rock_material = preload("res://objs/asteroids/asteroid_materials/rock_mat.ma
 var iron_material = preload("res://objs/asteroids/asteroid_materials/iron_mat.material")
 var material = [ice_material, rock_material, iron_material]
 
-var asteroid2
-var asteroid3
-
 func _ready() -> void:
   generate()
 
