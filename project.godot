@@ -19,6 +19,22 @@ config/icon="res://icon.svg"
 
 Resources="*res://globals/resources.gd"
 
+[importer_defaults]
+
+3d_texture={
+"compress/channel_pack": 0,
+"compress/hdr_compression": 1,
+"compress/high_quality": false,
+"compress/lossy_quality": 0.7,
+"compress/mode": 0,
+"compress/rdo_quality_loss": 0.0,
+"compress/uastc_level": 0,
+"mipmaps/generate": true,
+"mipmaps/limit": -1,
+"slices/horizontal": 8,
+"slices/vertical": 8
+}
+
 [input]
 
 move_forward={
