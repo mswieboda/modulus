@@ -43,4 +43,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 49.767094)
 [node name="pause_menu" parent="." instance=ExtResource("1_dphjl")]
 
 [node name="astroid_belt" parent="." instance=ExtResource("6_t5ptc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 128, 0, 0)

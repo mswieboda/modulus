@@ -3,15 +3,15 @@ extends Node3D
 var start = -20.0
 var end = 20.0
 
-@onready var asteroid_1 = preload("res://objs/asteroids/asteroid_1/asteroid_1.tscn")
-@onready var asteroid_2 = preload("res://objs/asteroids/asteroid_2/asteroid_2.tscn")
-@onready var asteroid_3 = preload("res://objs/asteroids/asteroid_3/asteroid_3.tscn")
-@onready var asteroids = [asteroid_1, asteroid_2, asteroid_3]
+var asteroid_1 = preload("res://objs/asteroids/asteroid_1/asteroid_1.tscn")
+var asteroid_2 = preload("res://objs/asteroids/asteroid_2/asteroid_2.tscn")
+var asteroid_3 = preload("res://objs/asteroids/asteroid_3/asteroid_3.tscn")
+var asteroids = [asteroid_1, asteroid_2, asteroid_3]
 
-@onready var ice_material = preload("res://objs/asteroids/asteroid_materials/ice_mat.material")
-@onready var rock_material = preload("res://objs/asteroids/asteroid_materials/rock_mat.material")
-@onready var iron_material = preload("res://objs/asteroids/asteroid_materials/iron_mat.material")
-@onready var material = [ice_material, rock_material, iron_material]
+var ice_material = preload("res://objs/asteroids/asteroid_materials/ice_mat.material")
+var rock_material = preload("res://objs/asteroids/asteroid_materials/rock_mat.material")
+var iron_material = preload("res://objs/asteroids/asteroid_materials/iron_mat.material")
+var material = [ice_material, rock_material, iron_material]
 
 var asteroid2
 var asteroid3
