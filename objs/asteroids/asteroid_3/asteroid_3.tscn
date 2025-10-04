@@ -1,7 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://bnnyncqr0diqx"]
+[gd_scene load_steps=3 format=3 uid="uid://bnnyncqr0diqx"]
 
-[ext_resource type="PackedScene" uid="uid://bn6hfrb6prfcu" path="res://objs/asteroids/asteroid_3/asteroid_3.blend" id="1_xd8ws"]
+[ext_resource type="PackedScene" uid="uid://d2nbrjguj4ds" path="res://objs/asteroids/asteroid_3/asteroid_3.blend" id="1_xd8ws"]
 
-[node name="astroid_3" type="Node3D"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_ceuqo"]
+radius = 11.0
 
-[node name="asteroid_3" parent="." instance=ExtResource("1_xd8ws")]
+[node name="astroid_3" type="StaticBody3D"]
+
+[node name="collision" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_ceuqo")
+
+[node name="mesh" parent="." instance=ExtResource("1_xd8ws")]
