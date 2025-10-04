@@ -2,7 +2,7 @@ extends Camera3D
 
 @export var rotation_speed: float = 1000
 
-@export var camera_smoothness: float = 3.0
+@export var camera_smoothness: float = 30.0
 @export var camera_distance: float = 19.0
 @export var camera_height: float = 10.0
 

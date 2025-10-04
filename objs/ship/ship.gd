@@ -5,7 +5,7 @@ extends CharacterBody3D
 @export var strafe_speed: float = 10.0
 @export var reverse_speed: float = 15.0
 @export var friction: float = 10.0
-@export var camera_match_speed: float = 3.0
+@export var camera_match_speed: float = 30.0
 
 @onready var rotation_pivot: Node3D = get_node("../rotation_pivot")
 @onready var camera: Camera3D = get_node("../rotation_pivot/camera")
