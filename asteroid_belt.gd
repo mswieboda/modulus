@@ -17,27 +17,38 @@ func _ready() -> void:
     generate()
 
 func generate():
-    var weight = 0.0
+  var new_asteroid
+  var weight = 0.0
+  var lerp_val = 0.0
+  var spawn_loc = Vector3(0,0,0)
+  while (weight <= end):
 
-    while (weight <= end):
-        var lerp_val = lerp(start, end, weight)
-        var angle = randf_range(0.0, 360.0)
-        var spawn_loc = Vector3()
+    var model_choice = randi_range(0,2)
+    new_asteroid = asteroids[model_choice].instantiate()
 
-        spawn_loc.z = lerp_val
-        spawn_loc.y = randf_range(0.0, 200.0) * sin(angle)
-        spawn_loc.x = randf_range(0.0, 200.0) * cos(angle)
+    lerp_val = lerp(start, end, weight)
+    var position_angle = randf_range(0.0, 360.0)
 
-        var model_choice = randi_range(0, 2)
-        var material_choice = randi_range(0, 2)
+    spawn_loc.z = lerp_val
+    spawn_loc.y = randf_range(00.0, 200.0) * sin(position_angle)
+    spawn_loc.x = randf_range(00.0, 200.0) * cos(position_angle)
 
-        var new_asteroid: StaticBody3D = asteroids[model_choice].instantiate()
-        var mesh: Node3D = new_asteroid.get_node("mesh")
-        var material = mesh.get_child(0)
+    var material_choice = randi_range(0,2)
+    var scale_choice = randf_range(0.1, 10.0)
+    var spin_x_choice = deg_to_rad( randf_range(0, 360) )
+    var spin_y_choice = deg_to_rad( randf_range(0, 360) )
+    var spin_z_choice = deg_to_rad( randf_range(0, 360) )
 
-        new_asteroid.position = spawn_loc
-        material.set_surface_override_material(0, materials[material_choice])
 
-        add_child(new_asteroid)
 
-        weight += 0.1
+    #spin the asteroid
+    new_asteroid.rotate_x(spin_x_choice)
+    new_asteroid.rotate_y(spin_y_choice)
+    new_asteroid.rotate_z(spin_z_choice)
+
+    new_asteroid.position = spawn_loc
+    var mesh = new_asteroid.get_node("mesh")
+    var material = mesh.get_child(0)
+    material.set_surface_override_material(0, materials[material_choice])
+    add_child(new_asteroid)
+    weight += 0.1

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bt6sslkbyaxss"]
 
-[ext_resource type="PackedScene" uid="uid://g46jn1hke3i4" path="res://objs/asteroids/asteroid_2/asteroid_2.blend" id="1_xyupa"]
+[ext_resource type="PackedScene" uid="uid://dajfchkjenbm4" path="res://objs/asteroids/asteroid_2/asteroid_2.blend" id="1_xyupa"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xyupa"]
 radius = 6.0
