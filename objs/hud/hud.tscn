@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://0w7onulq4gln"]
+[gd_scene load_steps=4 format=3 uid="uid://0w7onulq4gln"]
 
 [ext_resource type="Script" uid="uid://chihyan8iw3ej" path="res://objs/hud/hud.gd" id="1_h2wxv"]
-[ext_resource type="Texture2D" uid="uid://tgx72tt5is13" path="res://assets/crosshair.png" id="2_ak035"]
+[ext_resource type="FontFile" uid="uid://mt4h46pfqm8d" path="res://assets/fonts/Share_Tech_Mono/ShareTechMono-Regular.ttf" id="2_5eihx"]
+[ext_resource type="Texture2D" uid="uid://c8ln3ug7m2ek0" path="res://assets/images/crosshair.png" id="2_ak035"]
 
 [node name="hud" type="Control"]
 layout_mode = 3
@@ -28,21 +29,60 @@ theme_override_constants/margin_bottom = 16
 [node name="vbox" type="VBoxContainer" parent="margin"]
 layout_mode = 2
 
-[node name="metal_label" type="Label" parent="margin/vbox"]
+[node name="carbon" type="Label" parent="margin/vbox"]
 layout_mode = 2
-text = "metal:"
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 32
+text = "carbon: 0"
 
-[node name="metal_value" type="Label" parent="margin/vbox"]
+[node name="ice" type="Label" parent="margin/vbox"]
 layout_mode = 2
-text = "0"
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 32
+text = "ice: 0"
 
-[node name="gas_label" type="Label" parent="margin/vbox"]
+[node name="copper" type="Label" parent="margin/vbox"]
 layout_mode = 2
-text = "gas:"
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 32
+text = "copper: 0"
 
-[node name="gas_value" type="Label" parent="margin/vbox"]
+[node name="iron" type="Label" parent="margin/vbox"]
 layout_mode = 2
-text = "0"
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 32
+text = "iron: 0"
+
+[node name="uranium" type="Label" parent="margin/vbox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 32
+text = "uranium: 0"
+
+[node name="spacer" type="Label" parent="margin/vbox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 32
+
+[node name="storage" type="Label" parent="margin/vbox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 32
+text = "storage: 0/30"
+
+[node name="storage_progress" type="Label" parent="margin/vbox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 32
+text = "[          ]"
 
 [node name="center" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -52,12 +92,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="crosshair_color" type="ColorRect" parent="center"]
-visible = false
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-color = Color(1, 0, 0, 0.49803922)
 
 [node name="crosshair" type="TextureRect" parent="center"]
 custom_minimum_size = Vector2(64, 64)
