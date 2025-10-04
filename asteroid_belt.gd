@@ -28,10 +28,10 @@ func generate():
       spawn_loc.y = randf_range(00.0, 200.0) * sin(angle)
       spawn_loc.x = randf_range(00.0, 200.0) * cos(angle)
       var model_choice = randi_range(0,2)
-      var matereial_choice = randi_range(0,2)
+      var material_choice = randi_range(0,2)
       new_asteroid = asteroids[model_choice].instantiate()
       new_asteroid.position = spawn_loc
-      new_asteroid.get_child(0).get_child(0).set_surface_override_material(0,material[matereial_choice])
-      print(new_asteroid.get_child(0).get_child(0))
+      new_asteroid.get_child(0).get_child(0).set_surface_override_material(0, material[material_choice])
+      print(new_asteroid.get_child(0))
       add_child(new_asteroid)
       weight += 0.1
