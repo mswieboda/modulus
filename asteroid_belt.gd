@@ -33,5 +33,7 @@ func generate():
       var choice = randi_range(0,2)
       new_asteroid = asteroids[choice].instantiate()
       new_asteroid.position = spawn_loc
+      new_asteroid.get_child(0).get_child(0).set_surface_override_material(0,ice_material)
+      print(new_asteroid.get_child(0).get_child(0))
       add_child(new_asteroid)
       weight += 0.1
