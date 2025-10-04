@@ -1,23 +1,31 @@
 extends StaticBody3D
 
-var amount = 100.0
+@export var resource: String = "ice"
+
+var amount = 10.0
+
+func get_resource():
+    return resource
+
+func change_resource(new_resource: String):
+    resource = new_resource
+
+func get_amount():
+    return amount
 
 func mine(mine_amount: float) -> float:
     if amount - mine_amount < 0:
         mine_amount = amount
 
-    if mine_amount <= 0:
-        explode()
-        return amount
-
     amount -= mine_amount
 
-    return amount
+    if amount <= 0:
+        amount = 0
+        explode()
+
+    return mine_amount
 
 func explode():
     var parent = get_parent()
     parent.remove_child(self)
     queue_free()
-
-func get_amount():
-    return amount

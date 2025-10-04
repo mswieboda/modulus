@@ -7,7 +7,7 @@ extends Node3D
 @export var rotation_speed: float = 1000
 @export var camera_smoothness: float = 3.0
 @export var ship_laser_max_distance: float = 300.0
-@export var mining_damage_per_second: float = 50.0
+@export var mining_damage_per_second: float = 5.0
 @export var debug_draw: bool = false  # Enable to see the ray
 
 @onready var ship: CharacterBody3D = $ship_body
@@ -136,10 +136,14 @@ func on_laser_hit(hit_info: Dictionary, delta: float):
     var hit_object = hit_info.collider
 
     if hit_object.has_method("mine"):
+        change_laser_mesh_material_to_green()
+
         # TODO: some visual progress bar, circlular like BoTW sprint, or NMS mining
         #       of amount of mined asteroid decreasing
-        hit_object.mine(mining_damage_per_second * delta)
-        change_laser_mesh_material_to_green()
+        var resource = hit_object.get_resource()
+        var amount = hit_object.mine(mining_damage_per_second * delta)
+
+        Resources.add(resource, amount)
 
 func draw_debug_line(from: Vector3, to: Vector3, color: Color):
     var immediate_mesh = ImmediateMesh.new()
