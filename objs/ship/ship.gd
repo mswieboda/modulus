@@ -107,6 +107,8 @@ func move_to_ship(delta: float):
 func mine_laser_input():
     if Input.is_action_just_pressed("mine") and not Input.is_action_pressed("boost"):
         ship_laser_mesh.show()
+    if Input.is_action_just_released("boost") and Input.is_action_pressed("mine"):
+        ship_laser_mesh.show()
     if Input.is_action_just_pressed("boost") or Input.is_action_just_released("mine"):
         ship_laser_mesh.hide()
 
