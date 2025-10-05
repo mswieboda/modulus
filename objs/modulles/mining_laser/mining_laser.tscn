@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1kvt654g7dca"]
+
+[ext_resource type="PackedScene" uid="uid://dpw5x8d2x68nn" path="res://objs/modulles/mining_laser/mining_laser_base.blend" id="1_iidoe"]
+[ext_resource type="PackedScene" uid="uid://ctwb33oyndni1" path="res://objs/modulles/mining_laser/mining_laser_barrel.blend" id="2_dx72r"]
+[ext_resource type="PackedScene" uid="uid://n0o6dykln21q" path="res://objs/modulles/base_module/base_module.blend" id="3_40jq7"]
+
+[node name="mining_laser" type="Node3D"]
+
+[node name="mining_laser_base" parent="." instance=ExtResource("1_iidoe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="mining_laser_barrel" parent="mining_laser_base" instance=ExtResource("2_dx72r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0076966, 0)
+
+[node name="base_module" parent="." instance=ExtResource("3_40jq7")]
