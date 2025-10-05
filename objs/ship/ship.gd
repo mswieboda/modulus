@@ -8,7 +8,6 @@ extends Node3D
 @export var camera_smoothness: float = 3.0
 @export var ship_laser_max_distance: float = 500.0
 @export var mining_damage_per_second: float = 5.0
-@export var debug_draw: bool = false  # Enable to see the ray
 
 @onready var ship: CharacterBody3D = $ship_body
 @onready var ship_laser: Node3D = $ship_body/laser_raycast_point
@@ -19,14 +18,9 @@ extends Node3D
 const RESOURCE_PARTICLE = preload("res://objs/resource_particle/resource_particle.tscn")
 
 var view_center: Vector2 = Vector2()
-var debug_line: MeshInstance3D
 
 func _ready() -> void:
     view_center = get_viewport().get_visible_rect().size / 2
-
-    if debug_draw:
-        debug_line = MeshInstance3D.new()
-        add_child(debug_line)
 
 func _physics_process(delta: float):
     rotation(delta)
@@ -124,11 +118,6 @@ func raycast_from_laser(delta: float):
     ship_laser_mesh.position.y = length / 2
     ship_laser_mesh.scale.y = length
 
-    if debug_draw and debug_line:
-        var start_position = ray_origin + ray_direction # * ship_laser_max_distance / 2
-        draw_debug_line(start_position, ray_end if not result else result.position,
-                       Color.GREEN if result else Color.RED)
-
     if result:
         on_laser_hit(result, delta)
     else:
@@ -162,20 +151,6 @@ func on_laser_hit(hit_info: Dictionary, delta: float):
 
         if hit_object.is_inside_tree():
             spawn_resource_particles(hit_object.global_position, resource, radius, 1)
-
-func draw_debug_line(from: Vector3, to: Vector3, color: Color):
-    var immediate_mesh = ImmediateMesh.new()
-    immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
-    immediate_mesh.surface_add_vertex(from)
-    immediate_mesh.surface_add_vertex(to)
-    immediate_mesh.surface_end()
-
-    debug_line.mesh = immediate_mesh
-
-    var material = StandardMaterial3D.new()
-    material.albedo_color = color
-    material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-    debug_line.material_override = material
 
 func change_laser_mesh_material_to_green():
     var material = StandardMaterial3D.new()
