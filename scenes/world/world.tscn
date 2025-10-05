@@ -1,12 +1,12 @@
 [gd_scene load_steps=12 format=3 uid="uid://cdstsqvisrcbb"]
 
 [ext_resource type="Texture2D" uid="uid://b6eurqgu20lbe" path="res://scenes/world/space.hdr" id="1_1fp7r"]
-[ext_resource type="Script" path="res://scenes/world/world.gd" id="1_bq33v"]
+[ext_resource type="Script" uid="uid://4ed6o3ujwreu" path="res://scenes/world/world.gd" id="1_bq33v"]
 [ext_resource type="PackedScene" uid="uid://c17e7ny0b65ei" path="res://objs/pause_menu/pause_menu.tscn" id="1_dphjl"]
 [ext_resource type="PackedScene" uid="uid://bayc08vbvk1bo" path="res://objs/ship/ship.tscn" id="2_sl2e5"]
 [ext_resource type="PackedScene" uid="uid://js8vgwbre6di" path="res://scenes/modding_screen/modding_screen.tscn" id="2_t5ptc"]
 [ext_resource type="PackedScene" uid="uid://0w7onulq4gln" path="res://objs/hud/hud.tscn" id="3_6m72w"]
-[ext_resource type="PackedScene" uid="uid://de4bt5u3jgtp7" path="res://objs/asteroids/asteroid_belt/asetroid_belt.tscn" id="6_t5ptc"]
+[ext_resource type="Script" uid="uid://csbk7o5cqusir" path="res://scenes/world/asteroid_belt.gd" id="6_j2gmx"]
 [ext_resource type="PackedScene" uid="uid://bsuivlq5lnmf8" path="res://objs/dock/dock.tscn" id="8_j2gmx"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6m72w"]
@@ -42,8 +42,8 @@ environment = SubResource("Environment_t5ptc")
 [node name="ship" parent="content" instance=ExtResource("2_sl2e5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 49.767094)
 
-[node name="asteriod_belt" parent="content" instance=ExtResource("6_t5ptc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 623, 0, -1191.6284)
+[node name="asteroid_belt" type="Node3D" parent="content"]
+script = ExtResource("6_j2gmx")
 
 [node name="modding_screen" parent="." instance=ExtResource("2_t5ptc")]
 visible = false
