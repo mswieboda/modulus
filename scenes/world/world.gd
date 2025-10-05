@@ -19,11 +19,12 @@ func _input(event: InputEvent):
             open_modding_screen()
 
 func open_modding_screen():
-    # Switch visibility and cameras
+    # Switch visibility and cameras, switch hud info
     world_content.visible = false
     world_content.process_mode = Node.PROCESS_MODE_DISABLED
     world_camera.current = false
     hud.crosshair.hide()
+    hud.view_toggle_info_label.text = "[TAB] to go back to space"
 
     modding_screen.visible = true
     modding_screen.process_mode = Node.PROCESS_MODE_INHERIT
@@ -41,5 +42,6 @@ func close_modding_screen():
     world_content.process_mode = Node.PROCESS_MODE_INHERIT
     world_camera.current = true
     hud.crosshair.show()
+    hud.view_toggle_info_label.text = "[TAB] to modify ship"
 
     Input.mouse_mode = Input.MOUSE_MODE_HIDDEN

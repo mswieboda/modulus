@@ -4,7 +4,8 @@ extends Control
 @export var storage_progress_chars: int = 10
 
 @onready var crosshair: TextureRect = $center/crosshair
-@onready var resources_vbox: VBoxContainer = $margin/vbox
+@onready var resources_vbox: VBoxContainer = $margin/resources/vbox
+@onready var view_toggle_info_label: Label = $margin/view_info/vbox/info
 
 
 func _process(delta: float):

@@ -26,63 +26,87 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="vbox" type="VBoxContainer" parent="margin"]
+[node name="resources" type="Control" parent="margin"]
 layout_mode = 2
 
-[node name="carbon" type="Label" parent="margin/vbox"]
+[node name="vbox" type="VBoxContainer" parent="margin/resources"]
+layout_mode = 1
+offset_right = 1120.0
+offset_bottom = 616.0
+
+[node name="carbon" type="Label" parent="margin/resources/vbox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_5eihx")
 theme_override_font_sizes/font_size = 18
 text = "carbon: 0"
 
-[node name="ice" type="Label" parent="margin/vbox"]
+[node name="ice" type="Label" parent="margin/resources/vbox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_5eihx")
 theme_override_font_sizes/font_size = 18
 text = "ice: 0"
 
-[node name="copper" type="Label" parent="margin/vbox"]
+[node name="copper" type="Label" parent="margin/resources/vbox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_5eihx")
 theme_override_font_sizes/font_size = 18
 text = "copper: 0"
 
-[node name="iron" type="Label" parent="margin/vbox"]
+[node name="iron" type="Label" parent="margin/resources/vbox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_5eihx")
 theme_override_font_sizes/font_size = 18
 text = "iron: 0"
 
-[node name="uranium" type="Label" parent="margin/vbox"]
+[node name="uranium" type="Label" parent="margin/resources/vbox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_5eihx")
 theme_override_font_sizes/font_size = 18
 text = "uranium: 0"
 
-[node name="spacer" type="Label" parent="margin/vbox"]
+[node name="spacer" type="Label" parent="margin/resources/vbox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_5eihx")
 theme_override_font_sizes/font_size = 18
 
-[node name="storage" type="Label" parent="margin/vbox"]
+[node name="storage" type="Label" parent="margin/resources/vbox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_5eihx")
 theme_override_font_sizes/font_size = 18
 text = "storage: 0/30"
 
-[node name="storage_progress" type="Label" parent="margin/vbox"]
+[node name="storage_progress" type="Label" parent="margin/resources/vbox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_5eihx")
 theme_override_font_sizes/font_size = 18
 text = "[          ]"
+
+[node name="view_info" type="Control" parent="margin"]
+layout_mode = 2
+
+[node name="vbox" type="VBoxContainer" parent="margin/view_info"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -75.0
+offset_bottom = 49.0
+grow_horizontal = 0
+
+[node name="info" type="Label" parent="margin/view_info/vbox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5176471, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 18
+text = "[TAB] to modify ship"
 
 [node name="center" type="CenterContainer" parent="."]
 layout_mode = 1
