@@ -34,11 +34,8 @@ func _ready():
     modding_screen.process_mode = Node.PROCESS_MODE_DISABLED
 
 func _input(event: InputEvent):
-    if event.is_action_pressed("modding"):
-        if modding_screen.visible:
-            close_modding_screen()
-        else:
-            open_modding_screen()
+    if event.is_action_pressed("modding") and modding_screen.visible:
+        close_modding_screen()
 
 func _process(delta: float):
     if is_warp_jumping:
@@ -49,6 +46,7 @@ func _process(delta: float):
     if is_resetting_from_warp:
         check_warp_reset(delta)
 
+# called from ship.gd when docked
 func open_modding_screen():
     # Switch visibility and cameras, switch hud info
     world_content.visible = false
@@ -76,6 +74,9 @@ func close_modding_screen():
     hud.crosshair.show()
     hud.modding_controls_label.hide()
     hud.controls_label.show()
+
+    if world_ship.has_method("on_dock_launch"):
+        world_ship.on_dock_launch()
 
     Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 

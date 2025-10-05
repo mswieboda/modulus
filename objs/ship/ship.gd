@@ -11,25 +11,51 @@ extends Node3D
 @export var camera_smoothness: float = 3.0
 @export var ship_laser_max_distance: float = 500.0
 @export var mining_damage_per_second: float = 5.0
+@export var dock_speed: float = 1.5
+@export var dock_rotate_speed: float = 1.5
+@export var dock_launch_speed: float = 5.0
 
 @onready var ship: CharacterBody3D = $ship_body
 @onready var ship_laser: Node3D = $ship_body/laser_raycast_point
 @onready var ship_laser_mesh: Node3D = $ship_body/mine_gun/laser
 @onready var rotation_pivot: Node3D = $rotation_pivot
 @onready var camera: Camera3D = get_node("rotation_pivot/camera")
+@onready var area: Area3D = $ship_body/area
+@onready var world: Node3D = get_parent().get_parent()
 
 const RESOURCE_PARTICLE = preload("res://objs/resource_particle/resource_particle.tscn")
 
 var view_center: Vector2 = Vector2()
 var is_warp_jumping = false
+var dock_launch_target: Node3D = null
+var dock_target = Vector3()
+var is_docking = false
+var dock_wait_progress = 0.0
+var is_modifying_ship = false
+var is_launching_from_dock = false
 
 func _ready():
     view_center = get_viewport().get_visible_rect().size / 2
+    area.area_entered.connect(_on_area_entered)
 
 func _physics_process(delta: float):
     if is_warp_jumping:
         rotation_pivot_follow_rotation(delta)
         return
+
+    if is_docking:
+        move_to_dock(delta)
+        rotation_pivot_follow_rotation(delta)
+        move_to_ship(delta)
+        return
+
+    if is_modifying_ship:
+        return
+
+    if is_launching_from_dock:
+        launch_from_dock(delta)
+        rotation_pivot_follow_rotation(delta)
+        move_to_ship(delta)
 
     rotation(delta)
     rotation_pivot_follow_rotation(delta)
@@ -211,3 +237,58 @@ func spawn_resource_particles(asteroid_pos: Vector3, resource: String, asteroid_
 
         particle.global_position = spawn_pos
         particle.set_target(ship)
+
+func _on_area_entered(other_area: Area3D):
+    if is_warp_jumping or \
+        is_docking or \
+        is_modifying_ship or \
+        is_launching_from_dock:
+        return
+
+    if other_area.is_in_group("dock"):
+        var dock = other_area.get_parent_node_3d()
+        dock_launch_target = dock.get_node("launch_target")
+        dock_target = other_area.global_position
+        is_docking = true
+
+func move_to_dock(delta: float):
+    var is_position_done = lerp_to_position(dock_target, delta * dock_speed)
+    var is_rotation_done = lerp_to_rotation(Vector3.ZERO, delta * dock_speed)
+
+    if is_position_done and is_rotation_done:
+        is_docking = false
+        dock_target = null
+
+        if world.has_method("open_modding_screen"):
+            is_modifying_ship = true
+            dock_wait_progress = 0.0
+
+            world.open_modding_screen()
+
+func on_dock_launch():
+    is_launching_from_dock = true
+    is_modifying_ship = false
+
+func launch_from_dock(delta: float):
+    var is_position_done = lerp_to_position(dock_launch_target.global_position, delta * dock_launch_speed, 0.5)
+    if is_position_done:
+        is_launching_from_dock = false
+        dock_launch_target = null
+
+func lerp_to_position(target: Vector3, lerp_speed: float, threshold: float = 0.1) -> bool:
+    ship.global_position = lerp(ship.global_position, target, lerp_speed)
+
+    if ship.global_position.distance_to(target) < threshold:
+        ship.global_position = target
+        return true
+
+    return false
+
+func lerp_to_rotation(target: Vector3, lerp_speed: float, threshold: float = 0.1) -> bool:
+    ship.global_rotation = lerp(ship.global_rotation, target, lerp_speed)
+
+    if ship.global_rotation.distance_to(target) < threshold:
+        ship.global_rotation = target
+        return true
+
+    return false

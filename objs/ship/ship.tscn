@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bayc08vbvk1bo"]
+[gd_scene load_steps=8 format=3 uid="uid://bayc08vbvk1bo"]
 
-[ext_resource type="Script" uid="uid://erj2cfpfmag4" path="res://objs/ship/ship.gd" id="1_lmpqp"]
+[ext_resource type="Script" uid="uid://c8iokbmahdgrj" path="res://objs/ship/ship.gd" id="1_lmpqp"]
 [ext_resource type="PackedScene" uid="uid://d2a0t4o0m4scl" path="res://objs/ship/ship.blend" id="3_g2y22"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a061m"]
@@ -15,6 +15,10 @@ height = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a061m"]
 albedo_color = Color(1, 0.4392157, 0, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_a061m"]
+height = 3.0
+radius = 7.0
 
 [node name="ship" type="Node3D"]
 script = ExtResource("1_lmpqp")
@@ -45,6 +49,12 @@ surface_material_override/0 = SubResource("StandardMaterial3D_a061m")
 
 [node name="laser_raycast_point" type="Node3D" parent="ship_body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4310854, -8.99767)
+
+[node name="area" type="Area3D" parent="ship_body" groups=["player"]]
+
+[node name="collision" type="CollisionShape3D" parent="ship_body/area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.7157736)
+shape = SubResource("CylinderShape3D_a061m")
 
 [node name="rotation_pivot" type="Node3D" parent="."]
 
