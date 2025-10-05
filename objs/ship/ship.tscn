@@ -1,9 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://bayc08vbvk1bo"]
+[gd_scene load_steps=7 format=3 uid="uid://bayc08vbvk1bo"]
 
 [ext_resource type="Script" uid="uid://erj2cfpfmag4" path="res://objs/ship/ship.gd" id="1_lmpqp"]
 [ext_resource type="PackedScene" uid="uid://d2a0t4o0m4scl" path="res://objs/ship/ship.blend" id="3_g2y22"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_a061m"]
+size = Vector3(2, 2, 13)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_18gon"]
+size = Vector3(4, 1, 8)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_a061m"]
 radius = 0.1
@@ -17,7 +21,16 @@ script = ExtResource("1_lmpqp")
 
 [node name="ship_body" type="CharacterBody3D" parent="."]
 
-[node name="collision" type="CollisionShape3D" parent="ship_body"]
+[node name="collision_body" type="CollisionShape3D" parent="ship_body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.046903133, -2.4354048)
+shape = SubResource("BoxShape3D_a061m")
+
+[node name="collision_left_wing" type="CollisionShape3D" parent="ship_body"]
+transform = Transform3D(0.37362146, -0.23556614, -0.89717066, 0.09056112, 0.9718583, -0.21746287, 0.92314965, -1.6115866e-08, 0.3844402, -4.104, 0, 0.012)
+shape = SubResource("BoxShape3D_18gon")
+
+[node name="collision_right_wing" type="CollisionShape3D" parent="ship_body"]
+transform = Transform3D(0.3932818, 0.18815194, 0.89996016, -0.0067423624, 0.979401, -0.20181394, -0.9193933, 0.07330191, 0.38644916, 4.104, 0, -0.012)
 shape = SubResource("BoxShape3D_18gon")
 
 [node name="mesh" parent="ship_body" instance=ExtResource("3_g2y22")]

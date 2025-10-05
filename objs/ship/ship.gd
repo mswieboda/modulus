@@ -7,6 +7,7 @@ extends Node3D
 @export var boost_multiplier: float = 3.0
 @export var friction: float = 10.0
 @export var rotation_speed: float = 1000.0
+@export var roll_speed: float = 1.5
 @export var camera_smoothness: float = 3.0
 @export var ship_laser_max_distance: float = 500.0
 @export var mining_damage_per_second: float = 5.0
@@ -49,6 +50,12 @@ func rotation(delta: float):
     # YAW (left/right)
     var direction_yaw = view_center.x - mouse_pos.x
     ship.global_rotate(transform_basis.y, direction_yaw * delta / rotation_speed)
+
+    # ROLL
+    if Input.is_action_pressed("roll_left"):
+        ship.global_rotate(transform_basis.z, delta * roll_speed)
+    if Input.is_action_pressed("roll_right"):
+        ship.global_rotate(transform_basis.z, delta * -roll_speed)
 
 func rotation_pivot_follow_rotation(delta: float):
     var lerp_weight = camera_smoothness * delta
