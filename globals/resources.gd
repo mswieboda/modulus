@@ -10,13 +10,14 @@ var resource_materials: Dictionary = {
     "ice": ICE_MATERIAL,
     "copper": COPPER_MATERIAL,
     "iron": IRON_MATERIAL,
-    "uranium": IRON_MATERIAL
+    "uranium": URANIUM_MATERIAL
 }
 
 const ICE_MATERIAL = preload("res://objs/asteroids/asteroid_materials/ice_mat.material")
 const ROCK_MATERIAL = preload("res://objs/asteroids/asteroid_materials/rock_mat.material")
 const IRON_MATERIAL = preload("res://objs/asteroids/asteroid_materials/iron_mat.material")
 const COPPER_MATERIAL = preload("res://objs/asteroids/asteroid_materials/copper_mat.material")
+const URANIUM_MATERIAL = preload("res://objs/asteroids/asteroid_materials/uranium_mat.material")
 
 const ASTERIOD_1 = preload("res://objs/asteroids/asteroid_1/asteroid_1.tscn")
 const ASTERIOD_2 = preload("res://objs/asteroids/asteroid_2/asteroid_2.tscn")
