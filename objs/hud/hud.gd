@@ -33,7 +33,7 @@ func update_resources():
 
         node.text = "%s: %d" % [key, value]
 
-    set_progress("storage", Resources.get_storage(), Resources.get_total())
+    set_progress("storage", Resources.get_total(), Resources.get_storage())
 
 func update_ship_resources():
     var ship_resources = Resources.get_ship_resources()
@@ -47,9 +47,9 @@ func set_progress(label: String, amount: float, total: float):
     text_node.text = "%s: %d/%d: \n%s" % [label, amount, total, progress_text(amount, total)]
 
 func progress_text(amount: float, total: float):
-    var ratio = float(progress_chars) / amount
+    var ratio = float(progress_chars) / total
     var progress_count = roundi(float(amount) * ratio)
-    var progress_left_count = roundi(float(amount - total) * ratio)
+    var progress_left_count = roundi(float(total - amount) * ratio)
     var text = "["
     text += "|".repeat(progress_count)
     text += " ".repeat(progress_left_count)

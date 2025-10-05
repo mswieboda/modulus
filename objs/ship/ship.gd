@@ -14,6 +14,7 @@ extends Node3D
 @export var dock_speed: float = 1.5
 @export var dock_rotate_speed: float = 1.5
 @export var dock_launch_speed: float = 5.0
+@export var ship_fuel_speed_ratio: float = 0.001
 
 @onready var ship: CharacterBody3D = $ship_body
 @onready var ship_laser: Node3D = $ship_body/laser_raycast_point
@@ -88,6 +89,9 @@ func rotation_pivot_follow_rotation(delta: float):
     rotation_pivot.global_transform = rotation_pivot.global_transform.interpolate_with(ship.global_transform, lerp_weight)
 
 func movement(delta: float):
+    if Resources.get_ship_resources()["ship_fuel"]["amount"] <= 0.0:
+        return
+
     # Get input direction
     var input_dir := Input.get_vector("strafe_left", "strafe_right", "move_forward", "move_backward")
 
@@ -116,6 +120,8 @@ func movement(delta: float):
             current_speed = reverse_speed * delta
         elif input_dir.x != 0 and input_dir.y == 0:  # Pure strafing
             current_speed = strafe_speed * delta
+
+        Resources.remove_from_ship("ship_fuel", current_speed * ship_fuel_speed_ratio)
 
         # Apply velocity in all 3 axes
         ship.velocity = move_direction * current_speed

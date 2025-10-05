@@ -158,3 +158,31 @@ func random_angle_rad():
 
 func random_rotation():
     return Vector3(random_angle_rad(), random_angle_rad(), random_angle_rad())
+
+func add_to_ship(resource: String, amount_to_add: float = 1.0) -> float:
+    var data = ship_resources.get(resource)
+
+    if data["amount"] + amount_to_add > data["max"]:
+        data["amount"] = data["max"]
+        ship_resources.set(resource, data)
+        return data["amount"]
+
+    data["amount"] += amount_to_add
+
+    ship_resources.set(resource, data)
+
+    return data["amount"]
+
+func remove_from_ship(resource: String, amount_to_remove: float = 1.0) -> float:
+    var data = ship_resources.get(resource)
+
+    if data["amount"] <= 0.0 or amount_to_remove > data["amount"]:
+        data["amount"] = 0.0
+        ship_resources.set(resource, data)
+        return data["amount"]
+
+    data["amount"] -= amount_to_remove
+
+    ship_resources.set(resource, data)
+
+    return data["amount"]
