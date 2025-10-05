@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbca812i0djru"]
+
+[ext_resource type="Script" uid="uid://xp0exaigujl2" path="res://objs/resource_particle/resource_particle.gd" id="1_di2v2"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_46h7f"]
+radius = 0.1
+height = 0.2
+
+[node name="resource_particle" type="Node3D"]
+script = ExtResource("1_di2v2")
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_46h7f")

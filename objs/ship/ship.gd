@@ -16,6 +16,8 @@ extends Node3D
 @onready var rotation_pivot: Node3D = $rotation_pivot
 @onready var camera: Camera3D = get_node("rotation_pivot/camera")
 
+const RESOURCE_PARTICLE = preload("res://objs/resource_particle/resource_particle.tscn")
+
 var view_center: Vector2 = Vector2()
 var debug_line: MeshInstance3D
 
@@ -145,6 +147,10 @@ func on_laser_hit(hit_info: Dictionary, delta: float):
 
         Resources.add(resource, amount)
 
+        # Spawn collection particles
+        var radius = 11.0 # TODO: find radius, from hit_object and collision node
+        spawn_resource_particles(hit_object.global_position, radius, 1)
+
 func draw_debug_line(from: Vector3, to: Vector3, color: Color):
     var immediate_mesh = ImmediateMesh.new()
     immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
@@ -167,3 +173,20 @@ func change_laser_mesh_material_to_green():
 func remove_laser_mesh_material_override():
     if ship_laser_mesh.material_override:
         ship_laser_mesh.material_override = null
+
+func spawn_resource_particles(asteroid_pos: Vector3, asteroid_radius: float, count: int = 5):
+    for i in range(count):
+        # Random position around asteroid surface
+        var random_dir = Vector3(
+            randf_range(-1, 1),
+            randf_range(-1, 1),
+            randf_range(-1, 1)
+        ).normalized()
+
+        var spawn_pos = asteroid_pos + random_dir * asteroid_radius
+
+        # Create particle
+        var particle = RESOURCE_PARTICLE.instantiate()
+        get_tree().root.add_child(particle)
+        particle.global_position = spawn_pos
+        particle.set_target(ship)
