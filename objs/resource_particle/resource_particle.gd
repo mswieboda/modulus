@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var speed: float = 200.0
+@export var speed: float = 300.0
 @export var acceleration: float = 75.0
 @export var collection_radius: float = 3.0
 

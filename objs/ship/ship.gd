@@ -3,6 +3,7 @@ extends Node3D
 @export var speed: float = 100.0
 @export var strafe_speed: float = 10.0
 @export var reverse_speed: float = 15.0
+@export var boost_multiplier: float = 3.0
 @export var friction: float = 10.0
 @export var rotation_speed: float = 1000.0
 @export var camera_smoothness: float = 3.0
@@ -64,6 +65,8 @@ func movement(_delta: float):
 
         # Apply different speeds for different movement types
         var current_speed = speed
+        if input_dir.y < 0 and Input.is_action_pressed("boost"): # Moving forward, boosting
+            current_speed *= boost_multiplier
         if input_dir.y > 0:  # Moving backward
             current_speed = reverse_speed
         elif input_dir.x != 0 and input_dir.y == 0:  # Pure strafing
@@ -88,9 +91,9 @@ func move_to_ship(delta: float):
     rotation_pivot.global_position = rotation_pivot.global_position.lerp(target, lerp_weight)
 
 func mine_laser_input():
-    if Input.is_action_just_pressed("mine"):
+    if Input.is_action_just_pressed("mine") and not Input.is_action_pressed("boost"):
         ship_laser_mesh.show()
-    elif Input.is_action_just_released("mine"):
+    if Input.is_action_just_pressed("boost") or Input.is_action_just_released("mine"):
         ship_laser_mesh.hide()
 
 func raycast_from_laser(delta: float):

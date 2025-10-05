@@ -1,7 +1,7 @@
 extends Node3D
 
 @export var rotation_speed = 1.0
-@export var rotation_boost = 3.0
+@export var rotation_boost_multiplier = 3.0
 
 @onready var ship = $ship
 @onready var rotation_pivot = $rotation_pivot
@@ -21,10 +21,10 @@ func rotation(delta: float):
     var speed = rotation_speed
 
     if Input.is_action_pressed("boost"):
-        speed *= rotation_boost
+        speed *= rotation_boost_multiplier
 
     if is_resetting_camera:
-        var reseting_speed = rotation_speed * rotation_boost * rotation_boost
+        var reseting_speed = rotation_speed * rotation_boost_multiplier * rotation_boost_multiplier
         rotation_pivot.rotation = rotation_pivot.rotation.lerp(Vector3.ZERO, delta * reseting_speed)
 
         # Stop when close enough
