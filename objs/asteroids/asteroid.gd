@@ -13,6 +13,9 @@ func change_resource(new_resource: String):
 func get_amount():
     return amount
 
+func change_amount(new_amount: float):
+    amount = new_amount
+
 func mine(mine_amount: float) -> float:
     if amount - mine_amount < 0:
         mine_amount = amount
