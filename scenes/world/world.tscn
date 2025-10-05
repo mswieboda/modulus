@@ -37,6 +37,6 @@ environment = SubResource("Environment_t5ptc")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 49.767094)
 
 [node name="tmp_asteroids" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -194)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 623, 0, -1191.6284)
 
 [node name="astroid_belt" parent="tmp_asteroids" instance=ExtResource("6_t5ptc")]
