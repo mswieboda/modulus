@@ -18,7 +18,7 @@ extends Node3D
 @onready var world_ship: Node3D = $content/ship
 @onready var world_ship_body: CharacterBody3D = $content/ship/ship_body
 @onready var world_ship_rotation_pivot: Node3D = $content/ship/rotation_pivot
-@onready var world_asteriod_belt: Node3D = $content/asteriod_belt
+@onready var world_asteriod_belt: Node3D = $content/asteroid_belt
 @onready var modding_screen: Node3D = $modding_screen
 @onready var modding_screen_camera: Camera3D = $modding_screen/ship_moddable/rotation_pivot/camera
 

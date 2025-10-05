@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bsuivlq5lnmf8"]
 
-[ext_resource type="PackedScene" uid="uid://bvhvxuthmd73y" path="res://objs/dock/dock.blend" id="1_3b8k8"]
+[ext_resource type="PackedScene" uid="uid://dv3q4kkj3c3h" path="res://objs/dock/dock.blend" id="1_3b8k8"]
 [ext_resource type="Script" uid="uid://cxfxyqyvudmc8" path="res://objs/dock/dock.gd" id="1_loq8g"]
 
 [node name="dock" type="Node3D"]
