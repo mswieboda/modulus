@@ -12,6 +12,9 @@ const ASTERIODS = [ASTERIOD_1, ASTERIOD_2, ASTERIOD_3]
 func _ready() -> void:
     generate()
 
+# TODO: randomize where this whole node is displayed
+#       in relation to the ship spawn or (0, 0, 0)
+#       right now it's always in the same spot
 func generate():
     var weight = 0.0
 

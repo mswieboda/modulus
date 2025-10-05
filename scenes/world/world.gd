@@ -105,6 +105,14 @@ func check_warp_hold(delta: float):
 
 func on_warp_hold_complete():
     warp_hold_progress = 0.0
+
+    # TODO: spawn a bunch of asteroids in the direction of the ship
+    #       like a tunnel of small long horizontal capsules of different lengths
+    #       with collision shapes off?
+    # for now spawn them once, but in the future spawn an X number max, like 100
+    # and recycle them when they get 100m behind the ship
+
+
     is_warp_jumping = true
 
 func warp_jump(delta: float):
