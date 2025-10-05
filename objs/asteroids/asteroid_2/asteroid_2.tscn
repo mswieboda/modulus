@@ -4,21 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://g46jn1hke3i4" path="res://objs/asteroids/asteroid_2/asteroid_2.blend" id="1_xyupa"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xyupa"]
-radius = 6.0
+radius = 9.0
 
 [node name="asteroid_2" type="StaticBody3D"]
 script = ExtResource("1_5easi")
 
 [node name="collision" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.86130667, 3.156139, 0)
-shape = SubResource("SphereShape3D_xyupa")
-
-[node name="collision2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6504292, -2.5161633, 0)
-shape = SubResource("SphereShape3D_xyupa")
-
-[node name="collision3" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.56601, -2.5161633, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23339605, 0.31279182, 0)
 shape = SubResource("SphereShape3D_xyupa")
 
 [node name="mesh" parent="." instance=ExtResource("1_xyupa")]

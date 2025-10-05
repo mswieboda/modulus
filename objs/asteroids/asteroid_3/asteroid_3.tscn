@@ -1,15 +1,50 @@
-[gd_scene load_steps=4 format=3 uid="uid://bnnyncqr0diqx"]
+[gd_scene load_steps=9 format=3 uid="uid://bnnyncqr0diqx"]
 
 [ext_resource type="Script" uid="uid://cibg4qira5ba5" path="res://objs/asteroids/asteroid.gd" id="1_dshhr"]
 [ext_resource type="PackedScene" uid="uid://d2nbrjguj4ds" path="res://objs/asteroids/asteroid_3/asteroid_3.blend" id="1_xd8ws"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ceuqo"]
-radius = 11.0
+radius = 12.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dshhr"]
+radius = 8.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dvxqc"]
+radius = 5.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_jck4v"]
+radius = 10.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_quwye"]
+radius = 6.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_vdg5o"]
+radius = 7.0
 
 [node name="astroid_3" type="StaticBody3D"]
 script = ExtResource("1_dshhr")
 
 [node name="collision" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_ceuqo")
+
+[node name="collision2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1152668, 1.2746105, 13.615816)
+shape = SubResource("SphereShape3D_dshhr")
+
+[node name="collision3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0147295, -0.910537, 6.8488045)
+shape = SubResource("SphereShape3D_dvxqc")
+
+[node name="collision4" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.858347)
+shape = SubResource("SphereShape3D_jck4v")
+
+[node name="collision5" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4004717, -5.392884, -6.648118)
+shape = SubResource("SphereShape3D_quwye")
+
+[node name="collision6" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.534177, -2.85699, 8.72986)
+shape = SubResource("SphereShape3D_vdg5o")
 
 [node name="mesh" parent="." instance=ExtResource("1_xd8ws")]

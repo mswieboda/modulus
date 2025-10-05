@@ -10,6 +10,7 @@ radius = 11.0
 script = ExtResource("1_covas")
 
 [node name="collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.56152487, 0, -0.8861122)
 shape = SubResource("SphereShape3D_fbe0i")
 
 [node name="mesh" parent="." instance=ExtResource("1_w6713")]
