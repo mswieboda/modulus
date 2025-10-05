@@ -19,7 +19,7 @@ const RESOURCE_PARTICLE = preload("res://objs/resource_particle/resource_particl
 
 var view_center: Vector2 = Vector2()
 
-func _ready() -> void:
+func _ready():
     view_center = get_viewport().get_visible_rect().size / 2
 
 func _physics_process(delta: float):

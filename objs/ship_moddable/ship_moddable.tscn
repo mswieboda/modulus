@@ -11,4 +11,4 @@ script = ExtResource("1_wh8ol")
 [node name="rotation_pivot" type="Node3D" parent="."]
 
 [node name="camera" type="Camera3D" parent="rotation_pivot"]
-transform = Transform3D(1, 0, 0, 0, 0.8280408, 0.56066793, 0, -0.56066793, 0.8280408, 0, 21.537647, 22.932308)
+transform = Transform3D(1, 0, 0, 0, 0.81915206, 0.57357645, 0, -0.57357645, 0.81915206, 0, 10, 11)
