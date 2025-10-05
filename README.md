@@ -2,5 +2,6 @@
 3D horizontal platformer, for practice
 
 WIP screenshot:
-<img width="889" height="519" alt="image" src="https://github.com/user-attachments/assets/4067322a-a952-4504-a000-d1658bcf4713" />
+
+<img width="2380" height="1364" alt="image" src="https://github.com/user-attachments/assets/be3c39d3-92aa-4dc0-8a91-db7c461acece" />
 
