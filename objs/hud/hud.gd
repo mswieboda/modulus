@@ -7,7 +7,8 @@ extends Control
 @onready var resources_vbox: VBoxContainer = $margin/resources/vbox
 @onready var controls_label: Label = $margin/view_info/vbox/controls
 @onready var modding_controls_label: Label = $margin/view_info/vbox/modding_controls
-
+@onready var warp_info: Control = $margin/warp_info
+@onready var warp_progress_bar: ProgressBar = $margin/warp_info/hbox/warp_progress_bar
 
 func _process(delta: float):
     update_crosshair(delta)

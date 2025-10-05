@@ -1,8 +1,9 @@
 extends Node3D
 
-@export var speed: float = 100.0
-@export var strafe_speed: float = 10.0
-@export var reverse_speed: float = 15.0
+@export var speed: float = 300.0
+@export var acceleration: float = 15.0
+@export var strafe_speed: float = 1300.0
+@export var reverse_speed: float = 1750.0
 @export var boost_multiplier: float = 3.0
 @export var friction: float = 10.0
 @export var rotation_speed: float = 1000.0
@@ -19,16 +20,20 @@ extends Node3D
 const RESOURCE_PARTICLE = preload("res://objs/resource_particle/resource_particle.tscn")
 
 var view_center: Vector2 = Vector2()
+var is_warp_jumping = false
 
 func _ready():
     view_center = get_viewport().get_visible_rect().size / 2
 
 func _physics_process(delta: float):
+    if is_warp_jumping:
+        rotation_pivot_follow_rotation(delta)
+        return
+
     rotation(delta)
     rotation_pivot_follow_rotation(delta)
     movement(delta)
     move_to_ship(delta)
-    ship.move_and_slide()
 
     mine_laser_input()
     raycast_from_laser(delta)
@@ -49,7 +54,7 @@ func rotation_pivot_follow_rotation(delta: float):
     var lerp_weight = camera_smoothness * delta
     rotation_pivot.global_transform = rotation_pivot.global_transform.interpolate_with(ship.global_transform, lerp_weight)
 
-func movement(_delta: float):
+func movement(delta: float):
     # Get input direction
     var input_dir := Input.get_vector("strafe_left", "strafe_right", "move_forward", "move_backward")
 
@@ -64,13 +69,20 @@ func movement(_delta: float):
         move_direction = move_direction.normalized()
 
         # Apply different speeds for different movement types
-        var current_speed = speed
-        if input_dir.y < 0 and Input.is_action_pressed("boost"): # Moving forward, boosting
-            current_speed *= boost_multiplier
+        var current_speed = speed * delta
+
+        if input_dir.y < 0:
+            current_speed *= acceleration
+
+            if Input.is_action_pressed("boost"): # Moving forward, boosting
+                current_speed *= boost_multiplier
+
+            # only move in Y dir (forward)
+            move_direction = (forward * -input_dir.y)
         if input_dir.y > 0:  # Moving backward
-            current_speed = reverse_speed
+            current_speed = reverse_speed * delta
         elif input_dir.x != 0 and input_dir.y == 0:  # Pure strafing
-            current_speed = strafe_speed
+            current_speed = strafe_speed * delta
 
         # Apply velocity in all 3 axes
         ship.velocity = move_direction * current_speed
@@ -82,6 +94,8 @@ func movement(_delta: float):
         # ship.velocity.x = move_toward(ship.velocity.x, 0, friction * delta)
         # ship.velocity.y = move_toward(ship.velocity.y, 0, friction * delta)
         # ship.velocity.z = move_toward(ship.velocity.z, 0, friction * delta)
+
+    ship.move_and_slide()
 
 func move_to_ship(delta: float):
     # Move smoothly
