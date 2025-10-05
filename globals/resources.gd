@@ -5,6 +5,24 @@ var total = 0.0
 
 # key: String, value: float
 var resources: Dictionary = {}
+var ship_resources: Dictionary = {
+    "mining_laser": {
+        "amount": 100.0,
+        "max": 100.0
+    },
+    "oxygen": {
+        "amount": 100.0,
+        "max": 100.0
+    },
+    "ship_fuel": {
+        "amount": 100.0,
+        "max": 100.0
+    },
+    "warp_fuel": {
+        "amount": 30.0,
+        "max": 30.0
+    }
+}
 var resource_materials: Dictionary = {
     "carbon": ROCK_MATERIAL,
     "ice": ICE_MATERIAL,
@@ -33,6 +51,9 @@ func get_resources() -> Dictionary:
 
 func get_storage() -> float:
     return storage
+
+func get_ship_resources() -> Dictionary:
+    return ship_resources
 
 func get_count(resource: String) -> float:
     var count = resources.get(resource)

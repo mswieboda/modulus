@@ -34,40 +34,13 @@ layout_mode = 1
 offset_right = 1120.0
 offset_bottom = 616.0
 
-[node name="carbon" type="Label" parent="margin/resources/vbox"]
+[node name="storage" type="Label" parent="margin/resources/vbox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_5eihx")
 theme_override_font_sizes/font_size = 18
-text = "carbon: 0"
-
-[node name="ice" type="Label" parent="margin/resources/vbox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
-theme_override_fonts/font = ExtResource("2_5eihx")
-theme_override_font_sizes/font_size = 18
-text = "ice: 0"
-
-[node name="copper" type="Label" parent="margin/resources/vbox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
-theme_override_fonts/font = ExtResource("2_5eihx")
-theme_override_font_sizes/font_size = 18
-text = "copper: 0"
-
-[node name="iron" type="Label" parent="margin/resources/vbox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
-theme_override_fonts/font = ExtResource("2_5eihx")
-theme_override_font_sizes/font_size = 18
-text = "iron: 0"
-
-[node name="uranium" type="Label" parent="margin/resources/vbox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
-theme_override_fonts/font = ExtResource("2_5eihx")
-theme_override_font_sizes/font_size = 18
-text = "uranium: 0"
+text = "storage: 0/30
+[          ]"
 
 [node name="spacer" type="Label" parent="margin/resources/vbox"]
 layout_mode = 2
@@ -75,19 +48,89 @@ theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_5eihx")
 theme_override_font_sizes/font_size = 18
 
-[node name="storage" type="Label" parent="margin/resources/vbox"]
+[node name="carbon" type="Label" parent="margin/resources/vbox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_5eihx")
 theme_override_font_sizes/font_size = 18
-text = "storage: 0/30"
+text = "carbon: 0"
 
-[node name="storage_progress" type="Label" parent="margin/resources/vbox"]
+[node name="mining_laser" type="Label" parent="margin/resources/vbox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 18
+text = "mining laser:
+[          ]"
+
+[node name="spacer2" type="Label" parent="margin/resources/vbox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_5eihx")
 theme_override_font_sizes/font_size = 18
-text = "[          ]"
+
+[node name="ice" type="Label" parent="margin/resources/vbox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.49803922, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 18
+text = "ice: 0"
+
+[node name="oxygen" type="Label" parent="margin/resources/vbox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 18
+text = "oxygen:
+[          ]"
+
+[node name="ship_fuel" type="Label" parent="margin/resources/vbox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.49803922, 0, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 18
+text = "ship fuel:
+[          ]"
+
+[node name="spacer3" type="Label" parent="margin/resources/vbox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 18
+
+[node name="uranium" type="Label" parent="margin/resources/vbox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 18
+text = "uranium: 0"
+
+[node name="warp_fuel" type="Label" parent="margin/resources/vbox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7490196, 0, 1, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 18
+text = "warp_fuel:
+[          ]"
+
+[node name="spacer4" type="Label" parent="margin/resources/vbox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.51666665, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 18
+
+[node name="copper" type="Label" parent="margin/resources/vbox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.49803922, 0.24705882, 0, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 18
+text = "copper: 0"
+
+[node name="iron" type="Label" parent="margin/resources/vbox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 18
+text = "iron: 0"
 
 [node name="view_info" type="Control" parent="margin"]
 layout_mode = 2

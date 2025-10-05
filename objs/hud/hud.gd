@@ -1,7 +1,7 @@
 extends Control
 
 @export var crosshair_smoothness: float = 9.0
-@export var storage_progress_chars: int = 10
+@export var progress_chars: int = 25
 
 @onready var crosshair: TextureRect = $center/crosshair
 @onready var resources_vbox: VBoxContainer = $margin/resources/vbox
@@ -13,6 +13,7 @@ extends Control
 func _process(delta: float):
     update_crosshair(delta)
     update_resources()
+    update_ship_resources()
 
 func update_crosshair(delta: float):
     var mouse_pos = get_viewport().get_mouse_position()
@@ -32,21 +33,26 @@ func update_resources():
 
         node.text = "%s: %d" % [key, value]
 
-    var label = "storage"
-    var storage_node = resources_vbox.find_child(label)
-    var total = Resources.get_total()
-    var storage = Resources.get_storage()
-    storage_node.text = "%s: %d/%d" % [label, total, storage]
+    set_progress("storage", Resources.get_storage(), Resources.get_total())
 
-    # TODO: make this progress bar visual colored progress bar, not text
-    var progress_node = resources_vbox.find_child("storage_progress")
-    var ratio = float(storage_progress_chars) / storage
-    var progress_count = roundi(float(total) * ratio)
-    var progress_left_count = roundi(float(storage - total) * ratio)
-    var progress_text = "["
+func update_ship_resources():
+    var ship_resources = Resources.get_ship_resources()
 
-    progress_text += "|".repeat(progress_count)
-    progress_text += " ".repeat(progress_left_count)
-    progress_text += "]"
+    for key in ship_resources:
+        var data = ship_resources[key]
+        set_progress(key, data["amount"], data["max"])
 
-    progress_node.text = progress_text
+func set_progress(label: String, amount: float, total: float):
+    var text_node = resources_vbox.find_child(label)
+    text_node.text = "%s: %d/%d: \n%s" % [label, amount, total, progress_text(amount, total)]
+
+func progress_text(amount: float, total: float):
+    var ratio = float(progress_chars) / amount
+    var progress_count = roundi(float(amount) * ratio)
+    var progress_left_count = roundi(float(amount - total) * ratio)
+    var text = "["
+    text += "|".repeat(progress_count)
+    text += " ".repeat(progress_left_count)
+    text += "]"
+
+    return text
