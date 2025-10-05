@@ -1,7 +1,7 @@
 extends Node3D
 
 @export var warp_hold_duration: float = 1.5
-@export var warp_duration: float = 5.0
+@export var warp_duration: float = 4.0
 @export var warp_rotate_speed: float = 1.5
 @export var warp_random_angle_min: float = 30.0
 @export var warp_random_angle_max: float = 180.0
@@ -10,6 +10,7 @@ extends Node3D
 @export var warp_acceleration_max: float = 100.0
 @export var warp_stop_speed: float = 10.0
 @export var warp_camera_static_smoothness: float = 0.69
+@export var warp_reset_duration: float = 1.0
 
 @onready var hud: Control = $hud
 @onready var world_content: Node3D = $content
@@ -17,12 +18,15 @@ extends Node3D
 @onready var world_ship: Node3D = $content/ship
 @onready var world_ship_body: CharacterBody3D = $content/ship/ship_body
 @onready var world_ship_rotation_pivot: Node3D = $content/ship/rotation_pivot
+@onready var world_asteriod_belt: Node3D = $content/asteriod_belt
 @onready var modding_screen: Node3D = $modding_screen
 @onready var modding_screen_camera: Camera3D = $modding_screen/ship_moddable/rotation_pivot/camera
 
 var is_warp_jumping = false
 var warp_hold_progress: float = 0.0
 var warp_progress: float = 0.0
+var is_resetting_from_warp = false
+var warp_resetting_progress: float = 0.0
 
 func _ready():
     # hide and disable modding screen initially
@@ -41,6 +45,9 @@ func _process(delta: float):
         warp_jump(delta)
     else:
         check_warp_hold(delta)
+
+    if is_resetting_from_warp:
+        check_warp_reset(delta)
 
 func open_modding_screen():
     # Switch visibility and cameras, switch hud info
@@ -122,8 +129,30 @@ func warp_jump(delta: float):
     move_camera_to_ship(delta)
 
 func on_warp_complete():
+    world_asteriod_belt.clear()
+
     warp_progress = 0.0
     is_warp_jumping = false
+    is_resetting_from_warp = true
+
+func check_warp_reset(delta):
+    warp_resetting_progress = min(warp_resetting_progress + delta, warp_reset_duration)
+
+    if warp_resetting_progress >= warp_reset_duration:
+        on_warp_reset()
+
+func on_warp_reset():
+    warp_resetting_progress = 0.0
+    is_resetting_from_warp = false
+
+    # reset ship and rotation pivot
+    world_ship_body.global_position = Vector3.ZERO
+    world_ship_body.global_rotation = Vector3.ZERO
+    world_ship_rotation_pivot.global_position = Vector3.ZERO
+    world_ship_rotation_pivot.global_rotation = Vector3.ZERO
+
+    world_asteriod_belt.generate()
+
     world_ship.is_warp_jumping = false
 
 func move_camera_to_ship(_delta: float):

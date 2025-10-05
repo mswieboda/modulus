@@ -76,3 +76,7 @@ func generate():
         add_child(new_asteroid)
 
         weight += 0.1
+
+func clear():
+    for child in get_children():
+        child.queue_free()
