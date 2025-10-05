@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bayc08vbvk1bo" path="res://objs/ship/ship.tscn" id="2_sl2e5"]
 [ext_resource type="PackedScene" uid="uid://js8vgwbre6di" path="res://scenes/modding_screen/modding_screen.tscn" id="2_t5ptc"]
 [ext_resource type="PackedScene" uid="uid://0w7onulq4gln" path="res://objs/hud/hud.tscn" id="3_6m72w"]
-[ext_resource type="Script" uid="uid://csbk7o5cqusir" path="res://scenes/world/asteroid_belt.gd" id="6_j2gmx"]
+[ext_resource type="Script" path="res://scenes/world/asteroid_belt.gd" id="6_j2gmx"]
 [ext_resource type="PackedScene" uid="uid://bsuivlq5lnmf8" path="res://objs/dock/dock.tscn" id="8_j2gmx"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6m72w"]
