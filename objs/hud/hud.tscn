@@ -101,12 +101,18 @@ offset_left = -75.0
 offset_bottom = 49.0
 grow_horizontal = 0
 
-[node name="info" type="Label" parent="margin/view_info/vbox"]
+[node name="controls" type="Label" parent="margin/view_info/vbox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5176471, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_5eihx")
 theme_override_font_sizes/font_size = 18
-text = "modify ship [TAB]"
+text = "modify ship [TAB]
+
+move [WASD]
+boost [SHIFT]
+mine [SPACE / L MOUSE]
+
+pause [ESC]"
 horizontal_alignment = 2
 
 [node name="modding_controls" type="Label" parent="margin/view_info/vbox"]
@@ -115,13 +121,16 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.5176471, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_5eihx")
 theme_override_font_sizes/font_size = 18
-text = "
+text = "back to space [TAB]
+
 camera controls:
 pitch (up/down) [W / S]
 yaw (left/right) [A / D]
 roll [Q / E]
 boost [SHIFT]
-reset camera [R]"
+reset camera [R]
+
+pause [ESC]"
 horizontal_alignment = 2
 
 [node name="center" type="CenterContainer" parent="."]

@@ -5,7 +5,7 @@ extends Control
 
 @onready var crosshair: TextureRect = $center/crosshair
 @onready var resources_vbox: VBoxContainer = $margin/resources/vbox
-@onready var view_toggle_info_label: Label = $margin/view_info/vbox/info
+@onready var controls_label: Label = $margin/view_info/vbox/controls
 @onready var modding_controls_label: Label = $margin/view_info/vbox/modding_controls
 
 
