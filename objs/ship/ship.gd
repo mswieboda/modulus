@@ -4,9 +4,9 @@ extends Node3D
 @export var strafe_speed: float = 10.0
 @export var reverse_speed: float = 15.0
 @export var friction: float = 10.0
-@export var rotation_speed: float = 1000
+@export var rotation_speed: float = 1000.0
 @export var camera_smoothness: float = 3.0
-@export var ship_laser_max_distance: float = 300.0
+@export var ship_laser_max_distance: float = 500.0
 @export var mining_damage_per_second: float = 5.0
 @export var debug_draw: bool = false  # Enable to see the ray
 
@@ -135,7 +135,7 @@ func raycast_from_laser(delta: float):
         remove_laser_mesh_material_override()
 
 func on_laser_hit(hit_info: Dictionary, delta: float):
-    var hit_object = hit_info.collider
+    var hit_object: Node3D = hit_info.collider
 
     if hit_object.has_method("mine"):
         change_laser_mesh_material_to_green()
@@ -148,8 +148,19 @@ func on_laser_hit(hit_info: Dictionary, delta: float):
         Resources.add(resource, amount)
 
         # Spawn collection particles
-        var radius = 11.0 # TODO: find radius, from hit_object and collision node
-        spawn_resource_particles(hit_object.global_position, radius, 1)
+        var radius = 11.0
+        var collision: CollisionShape3D = hit_object.get_node("collision")
+
+        # get collision radius if possible, otherwise use default 11.0
+        if collision:
+            var collision_shape = collision.shape
+
+            if collision_shape and collision_shape.has_method("radius"):
+                radius = collision_shape.radius
+
+        radius *= hit_object.scale.x
+
+        spawn_resource_particles(hit_object.global_position, resource, radius, 1)
 
 func draw_debug_line(from: Vector3, to: Vector3, color: Color):
     var immediate_mesh = ImmediateMesh.new()
@@ -174,7 +185,7 @@ func remove_laser_mesh_material_override():
     if ship_laser_mesh.material_override:
         ship_laser_mesh.material_override = null
 
-func spawn_resource_particles(asteroid_pos: Vector3, asteroid_radius: float, count: int = 5):
+func spawn_resource_particles(asteroid_pos: Vector3, resource: String, asteroid_radius: float, count: int = 5):
     for i in range(count):
         # Random position around asteroid surface
         var random_dir = Vector3(
@@ -187,6 +198,14 @@ func spawn_resource_particles(asteroid_pos: Vector3, asteroid_radius: float, cou
 
         # Create particle
         var particle = RESOURCE_PARTICLE.instantiate()
+
         get_tree().root.add_child(particle)
+
+        # set mesh of specific material
+        var material = Resources.get_material(resource)
+        var mesh: MeshInstance3D = particle.get_node("mesh")
+
+        mesh.set_surface_override_material(0, material)
+
         particle.global_position = spawn_pos
         particle.set_target(ship)
