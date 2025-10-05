@@ -1,6 +1,7 @@
 extends Node3D
 
-@export var speed: float = 50.0
+@export var speed: float = 250.0
+@export var acceleration: float = 100.0
 @export var collection_radius: float = 1.0
 
 var target: Node3D
@@ -18,7 +19,7 @@ func _process(delta: float):
 
     # Move toward target
     var direction = (target.global_position - global_position).normalized()
-    velocity = velocity.lerp(direction * speed, 5.0 * delta)  # Home in on target
+    velocity = velocity.lerp(direction * speed, acceleration * delta)  # Home in on target
     global_position += velocity * delta
 
     # Check if close enough to collect

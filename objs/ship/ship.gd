@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var speed: float = 50.0
+@export var speed: float = 100.0
 @export var strafe_speed: float = 10.0
 @export var reverse_speed: float = 15.0
 @export var friction: float = 10.0
