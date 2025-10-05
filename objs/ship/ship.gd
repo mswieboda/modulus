@@ -14,7 +14,7 @@ extends Node3D
 @export var dock_speed: float = 1.5
 @export var dock_rotate_speed: float = 1.5
 @export var dock_launch_speed: float = 5.0
-@export var ship_fuel_speed_ratio: float = 0.001
+@export var ship_fuel_speed_ratio: float = 0.0001
 
 @onready var ship: CharacterBody3D = $ship_body
 @onready var ship_laser: Node3D = $ship_body/laser_raycast_point
