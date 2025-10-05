@@ -7,18 +7,26 @@ var total = 0.0
 var resources: Dictionary = {}
 var ship_resources: Dictionary = {
     "mining_laser": {
+        "resource": "carbon",
+        "resource_ratio": 5.0,
         "amount": 100.0,
         "max": 100.0
     },
     "oxygen": {
+        "resource": "ice",
+        "resource_ratio": 10.0,
         "amount": 100.0,
         "max": 100.0
     },
     "ship_fuel": {
+        "resource": "ice",
+        "resource_ratio": 5.0,
         "amount": 100.0,
         "max": 100.0
     },
     "warp_fuel": {
+        "resource": "uranium",
+        "resource_ratio": 2.0,
         "amount": 30.0,
         "max": 30.0
     }
@@ -71,14 +79,14 @@ func add(resource: String, amount: float = 1.0) -> float:
         amount = storage - total
 
     if amount <= 0.0:
-        return count
+        return 0.0
 
     count += amount
     total += amount
 
     resources.set(resource, count)
 
-    return count
+    return amount
 
 func remove(resource: String, amount: float = 1.0) -> float:
     var count = get_count(resource)
@@ -87,14 +95,14 @@ func remove(resource: String, amount: float = 1.0) -> float:
         amount -= count
 
     if amount <= 0.0:
-        return count
+        return 0.0
 
     count -= amount
     total -= amount
 
     resources.set(resource, count)
 
-    return count
+    return amount
 
 func clear(resource: String):
     var count = get_count(resource)
@@ -165,13 +173,13 @@ func add_to_ship(resource: String, amount_to_add: float = 1.0) -> float:
     if data["amount"] + amount_to_add > data["max"]:
         data["amount"] = data["max"]
         ship_resources.set(resource, data)
-        return data["amount"]
+        return amount_to_add - (data["max"] - data["amount"])
 
     data["amount"] += amount_to_add
 
     ship_resources.set(resource, data)
 
-    return data["amount"]
+    return amount_to_add
 
 func remove_from_ship(resource: String, amount_to_remove: float = 1.0) -> float:
     var data = ship_resources.get(resource)
@@ -185,4 +193,21 @@ func remove_from_ship(resource: String, amount_to_remove: float = 1.0) -> float:
 
     ship_resources.set(resource, data)
 
-    return data["amount"]
+    return amount_to_remove
+
+func convert_resources_to_ship():
+    # for each resource, find array of ship_resources with that resource
+    for resource_key in resources.keys():
+        var resource_amount = resources[resource_key]
+        # var filtered_ship_resources = Array()
+
+        for ship_resource_key in ship_resources:
+            var ship_resource = ship_resources[ship_resource_key]
+
+            if ship_resource["resource"] == resource_key:
+                # filtered_ship_resources.append(ship_resource)
+
+                # convert resource to ship resource
+                # TODO: use ship "resource_ratio"
+                var added = add_to_ship(ship_resource_key, resource_amount)
+                remove(resource_key, added)

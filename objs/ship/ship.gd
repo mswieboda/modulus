@@ -32,7 +32,7 @@ var dock_launch_target: Node3D = null
 var dock_target = Vector3()
 var is_docking = false
 var dock_wait_progress = 0.0
-var is_modifying_ship = false
+var is_docked = false
 var is_launching_from_dock = false
 
 func _ready():
@@ -50,7 +50,7 @@ func _physics_process(delta: float):
         move_to_ship(delta)
         return
 
-    if is_modifying_ship:
+    if is_docked:
         return
 
     if is_launching_from_dock:
@@ -247,7 +247,7 @@ func spawn_resource_particles(asteroid_pos: Vector3, resource: String, asteroid_
 func _on_area_entered(other_area: Area3D):
     if is_warp_jumping or \
         is_docking or \
-        is_modifying_ship or \
+        is_docked or \
         is_launching_from_dock:
         return
 
@@ -262,18 +262,25 @@ func move_to_dock(delta: float):
     var is_rotation_done = lerp_to_rotation(Vector3.ZERO, delta * dock_speed)
 
     if is_position_done and is_rotation_done:
-        is_docking = false
-        dock_target = null
+        on_docked()
 
-        if world.has_method("open_modding_screen"):
-            is_modifying_ship = true
-            dock_wait_progress = 0.0
+func on_docked():
+    is_docking = false
+    dock_target = null
+    dock_wait_progress = 0.0
+    is_docked = true
+    transfer_resources()
 
-            world.open_modding_screen()
+    if world.has_method("open_modding_screen"):
+        world.open_modding_screen()
+
+func transfer_resources():
+    # TODO: do this with timers, make it delayed?
+    Resources.convert_resources_to_ship()
 
 func on_dock_launch():
     is_launching_from_dock = true
-    is_modifying_ship = false
+    is_docked = false
 
 func launch_from_dock(delta: float):
     var is_position_done = lerp_to_position(dock_launch_target.global_position, delta * dock_launch_speed, 0.5)
