@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnhesxvtt0kpv"]
+
+[ext_resource type="PackedScene" uid="uid://d2a0t4o0m4scl" path="res://objs/ship/ship.blend" id="1_cymqr"]
+[ext_resource type="Script" uid="uid://d4bd0wjgxdnq8" path="res://objs/ship_moddable/ship_moddable.gd" id="1_wh8ol"]
+
+[node name="ship_moddable" type="Node3D"]
+script = ExtResource("1_wh8ol")
+
+[node name="ship" parent="." instance=ExtResource("1_cymqr")]
+
+[node name="rotation_pivot" type="Node3D" parent="."]
+
+[node name="camera" type="Camera3D" parent="rotation_pivot"]
+transform = Transform3D(1, 0, 0, 0, 0.8280408, 0.56066793, 0, -0.56066793, 0.8280408, 0, 21.537647, 22.932308)

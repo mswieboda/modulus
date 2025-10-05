@@ -47,17 +47,3 @@ func update_resources():
     progress_text += "]"
 
     progress_node.text = progress_text
-
-# TODO: temporary for testing, adding resources and seeing in the HUD
-func _input(event):
-    if event is InputEventKey and event.pressed and not event.echo:
-        if event.keycode == KEY_1:
-            Resources.add("carbon", 3)
-        elif event.keycode == KEY_2:
-            Resources.add("ice", 1)
-        elif event.keycode == KEY_3:
-            Resources.add("copper", 1)
-        elif event.keycode == KEY_4:
-            Resources.add("iron", 2)
-        elif event.keycode == KEY_5:
-            Resources.add("uranium", 5)

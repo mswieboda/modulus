@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://js8vgwbre6di"]
+
+[ext_resource type="PackedScene" uid="uid://cnhesxvtt0kpv" path="res://objs/ship_moddable/ship_moddable.tscn" id="2_jp6q8"]
+[ext_resource type="Texture2D" uid="uid://b6eurqgu20lbe" path="res://scenes/world/space.hdr" id="3_pv7ok"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_vi343"]
+panorama = ExtResource("3_pv7ok")
+energy_multiplier = 79.81
+
+[sub_resource type="Sky" id="Sky_v5dby"]
+sky_material = SubResource("PanoramaSkyMaterial_vi343")
+
+[sub_resource type="Environment" id="Environment_be4fe"]
+background_mode = 2
+sky = SubResource("Sky_v5dby")
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_sky_contribution = 0.93
+
+[node name="modding_screen" type="Node3D"]
+
+[node name="light" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_color = Color(0.6830772, 0.6830774, 0.6830771, 1)
+shadow_enabled = true
+
+[node name="environment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_be4fe")
+
+[node name="ship_moddable" parent="." instance=ExtResource("2_jp6q8")]

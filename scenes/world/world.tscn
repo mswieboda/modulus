@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://cdstsqvisrcbb"]
+[gd_scene load_steps=11 format=3 uid="uid://cdstsqvisrcbb"]
 
 [ext_resource type="Texture2D" uid="uid://b6eurqgu20lbe" path="res://scenes/world/space.hdr" id="1_1fp7r"]
+[ext_resource type="Script" uid="uid://4ed6o3ujwreu" path="res://scenes/world/world.gd" id="1_bq33v"]
 [ext_resource type="PackedScene" uid="uid://c17e7ny0b65ei" path="res://objs/pause_menu/pause_menu.tscn" id="1_dphjl"]
 [ext_resource type="PackedScene" uid="uid://bayc08vbvk1bo" path="res://objs/ship/ship.tscn" id="2_sl2e5"]
+[ext_resource type="PackedScene" uid="uid://js8vgwbre6di" path="res://scenes/modding_screen/modding_screen.tscn" id="2_t5ptc"]
 [ext_resource type="PackedScene" uid="uid://0w7onulq4gln" path="res://objs/hud/hud.tscn" id="3_6m72w"]
 [ext_resource type="PackedScene" uid="uid://de4bt5u3jgtp7" path="res://objs/asteroids/asteroid_belt/asetroid_belt.tscn" id="6_t5ptc"]
 
@@ -10,33 +12,39 @@
 panorama = ExtResource("1_1fp7r")
 energy_multiplier = 79.81
 
-[sub_resource type="Sky" id="Sky_v5dby"]
+[sub_resource type="Sky" id="Sky_bq33v"]
 sky_material = SubResource("PanoramaSkyMaterial_6m72w")
 
 [sub_resource type="Environment" id="Environment_t5ptc"]
 background_mode = 2
-sky = SubResource("Sky_v5dby")
+sky = SubResource("Sky_bq33v")
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_sky_contribution = 0.93
 
 [node name="world" type="Node3D"]
+script = ExtResource("1_bq33v")
 
 [node name="hud" parent="." instance=ExtResource("3_6m72w")]
 
 [node name="pause_menu" parent="." instance=ExtResource("1_dphjl")]
 
-[node name="light" type="DirectionalLight3D" parent="."]
+[node name="content" type="Node3D" parent="."]
+
+[node name="light" type="DirectionalLight3D" parent="content"]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 light_color = Color(0.6830772, 0.6830774, 0.6830771, 1)
 shadow_enabled = true
 
-[node name="environment" type="WorldEnvironment" parent="."]
+[node name="environment" type="WorldEnvironment" parent="content"]
 environment = SubResource("Environment_t5ptc")
 
-[node name="ship" parent="." instance=ExtResource("2_sl2e5")]
+[node name="ship" parent="content" instance=ExtResource("2_sl2e5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 49.767094)
 
-[node name="tmp_asteroids" type="Node3D" parent="."]
+[node name="asteriods" type="Node3D" parent="content"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 623, 0, -1191.6284)
 
-[node name="astroid_belt" parent="tmp_asteroids" instance=ExtResource("6_t5ptc")]
+[node name="astroid_belt" parent="content/asteriods" instance=ExtResource("6_t5ptc")]
+
+[node name="modding_screen" parent="." instance=ExtResource("2_t5ptc")]
+visible = false
