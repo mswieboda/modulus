@@ -160,7 +160,8 @@ func on_laser_hit(hit_info: Dictionary, delta: float):
 
         radius *= hit_object.scale.x
 
-        spawn_resource_particles(hit_object.global_position, resource, radius, 1)
+        if hit_object.is_inside_tree():
+            spawn_resource_particles(hit_object.global_position, resource, radius, 1)
 
 func draw_debug_line(from: Vector3, to: Vector3, color: Color):
     var immediate_mesh = ImmediateMesh.new()
