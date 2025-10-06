@@ -18,6 +18,7 @@ extends Node3D
 @onready var world_camera: Camera3D = $content/ship/rotation_pivot/camera
 @onready var world_ship: Node3D = $content/ship
 @onready var world_ship_body: CharacterBody3D = $content/ship/ship_body
+@onready var world_ship_warp_particles: GPUParticles3D = $content/ship/ship_body/warp_particles
 @onready var world_ship_rotation_pivot: Node3D = $content/ship/rotation_pivot
 @onready var world_asteriod_belt: Node3D = $content/asteroid_belt
 @onready var modding_screen: Node3D = $modding_screen
@@ -113,12 +114,7 @@ func on_warp_hold_complete():
 
     Resources.remove_from_ship("warp_fuel", warp_fuel_drain)
 
-    # TODO: spawn a bunch of asteroids in the direction of the ship
-    #       like a tunnel of small long horizontal capsules of different lengths
-    #       with collision shapes off?
-    # for now spawn them once, but in the future spawn an X number max, like 100
-    # and recycle them when they get 100m behind the ship
-
+    world_ship_warp_particles.emitting = true
 
     is_warp_jumping = true
 
@@ -144,6 +140,8 @@ func warp_jump(delta: float):
     move_camera_to_ship(delta)
 
 func on_warp_complete():
+    world_ship_warp_particles.emitting = false
+
     world_asteriod_belt.clear()
 
     warp_progress = 0.0

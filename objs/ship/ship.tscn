@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://bayc08vbvk1bo"]
 
 [ext_resource type="Script" uid="uid://b3nkvyjk8qajj" path="res://objs/ship/ship.gd" id="1_lmpqp"]
-[ext_resource type="PackedScene" uid="uid://0qgxv01lns6" path="res://objs/ship/ship.blend" id="3_g2y22"]
+[ext_resource type="PackedScene" uid="uid://d2a0t4o0m4scl" path="res://objs/ship/ship.blend" id="3_g2y22"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a061m"]
 size = Vector3(2, 2, 13)
@@ -145,7 +145,7 @@ lifetime = 0.2
 process_material = SubResource("ParticleProcessMaterial_4geug")
 draw_pass_1 = SubResource("CylinderMesh_iqs6a")
 
-[node name="Warp_particles" type="GPUParticles3D" parent="ship_body"]
+[node name="warp_particles" type="GPUParticles3D" parent="ship_body"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
 emitting = false
 amount = 300
