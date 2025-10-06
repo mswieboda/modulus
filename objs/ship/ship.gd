@@ -16,6 +16,7 @@ extends Node3D
 @export var dock_launch_speed: float = 5.0
 @export var ship_fuel_speed_drain_ratio: float = 0.0001
 @export var oxygen_drain_ratio_per_second: float = 0.5
+@export var mine_laser_drain_ratio_per_second: float = 1
 
 @onready var ship: CharacterBody3D = $ship_body
 @onready var ship_laser: Node3D = $ship_body/laser_raycast_point
@@ -69,7 +70,7 @@ func _physics_process(delta: float):
     movement(delta)
     move_to_ship(delta)
 
-    mine_laser_input()
+    mining_laser_input()
     raycast_from_laser(delta)
     drain_oxygen(delta)
 
@@ -150,7 +151,11 @@ func move_to_ship(delta: float):
 
     rotation_pivot.global_position = rotation_pivot.global_position.lerp(target, lerp_weight)
 
-func mine_laser_input():
+func mining_laser_input():
+    if Resources.get_ship_resources()["mining_laser"]["amount"] <= 0.0:
+        ship_laser_mesh.hide()
+        return
+
     if Input.is_action_just_pressed("mine") and not Input.is_action_pressed("boost"):
         ship_laser_mesh.show()
     if Input.is_action_just_released("boost") and Input.is_action_pressed("mine"):
@@ -161,6 +166,8 @@ func mine_laser_input():
 func raycast_from_laser(delta: float):
     if not ship_laser_mesh.visible:
         return
+
+    Resources.remove_from_ship("mining_laser", delta * mine_laser_drain_ratio_per_second)
 
     var ray_origin = ship_laser.global_position
     var ray_direction = -ship_laser.global_transform.basis.z
