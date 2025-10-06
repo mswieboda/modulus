@@ -19,6 +19,12 @@ config/icon="res://icon.svg"
 
 Resources="*res://globals/resources.gd"
 
+[display]
+
+window/size/mode=2
+window/size/resizable=false
+window/size/borderless=true
+
 [importer_defaults]
 
 3d_texture={
