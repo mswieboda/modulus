@@ -1,9 +1,7 @@
 extends Control
 
-@export var crosshair_smoothness: float = 9.0
 @export var progress_chars: int = 25
 
-@onready var crosshair: TextureRect = $center/crosshair
 @onready var ship_resources_vbox: VBoxContainer = $margin/resources/vbox/ship_vbox
 @onready var dock_resources_vbox: VBoxContainer = $margin/resources/vbox/dock_vbox
 @onready var controls_label: Label = $margin/view_info/vbox/controls
@@ -11,20 +9,10 @@ extends Control
 @onready var warp_info: Control = $margin/warp_info
 @onready var warp_progress_bar: ProgressBar = $margin/warp_info/hbox/warp_progress_bar
 
-func _process(delta: float):
-    update_crosshair(delta)
+func _process(_delta: float):
     update_resources()
     update_ship_resources()
     update_dock_resources()
-
-func update_crosshair(delta: float):
-    var mouse_pos = get_viewport().get_mouse_position()
-
-    # Get crosshair size (from texture or custom minimum size)
-    var crosshair_size = crosshair.texture.get_size() if crosshair.texture else crosshair.size
-    var centered_pos = mouse_pos - crosshair_size / 2.0
-
-    crosshair.position = crosshair.position.lerp(centered_pos, crosshair_smoothness * delta)
 
 func update_resources():
     var resources = Resources.get_resources()

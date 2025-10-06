@@ -21,6 +21,7 @@ extends Node3D
 @onready var ship: CharacterBody3D = $ship_body
 @onready var ship_laser: Node3D = $ship_body/laser_raycast_point
 @onready var ship_laser_mesh: Node3D = $ship_body/mine_gun/laser
+@onready var ship_laser_crosshair: Sprite3D = $ship_body/mine_gun/crosshair
 @onready var rotation_pivot: Node3D = $rotation_pivot
 @onready var camera: Camera3D = get_node("rotation_pivot/camera")
 @onready var area: Area3D = $ship_body/area
@@ -169,14 +170,12 @@ func mining_laser_input():
         ship_laser_mesh.hide()
 
 func raycast_from_laser(delta: float):
-    if not ship_laser_mesh.visible:
-        return
+    if ship_laser_mesh.visible:
+        Resources.remove_from_ship("mining_laser", delta * mine_laser_drain_ratio_per_second)
 
-    Resources.remove_from_ship("mining_laser", delta * mine_laser_drain_ratio_per_second)
-
-    var ray_origin = ship_laser.global_position
-    var ray_direction = -ship_laser.global_transform.basis.z
-    var ray_end = ray_origin + ray_direction * ship_laser_max_distance
+    var ray_origin: Vector3 = ship_laser.global_position
+    var ray_direction: Vector3 = -ship_laser.global_transform.basis.z
+    var ray_end: Vector3 = ray_origin + ray_direction * ship_laser_max_distance
 
     var space_state = get_world_3d().direct_space_state
     var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
@@ -188,16 +187,24 @@ func raycast_from_laser(delta: float):
     if ship_body:
         query.exclude = [ship_body.get_rid()]
 
-    var result = space_state.intersect_ray(query)
-
+    var result: Dictionary = space_state.intersect_ray(query)
     var length = ray_origin.distance_to(ray_end)
+
+    if result:
+        length = ray_origin.distance_to(result.position)
+
     ship_laser_mesh.global_position = ray_origin
     ship_laser_mesh.position.y = length / 2
     ship_laser_mesh.scale.y = length
 
     if result:
-        on_laser_hit(result, delta)
+        # in case the mesh is larger then the collision for some asteroid parts
+        ship_laser_crosshair.position.y = length - 7.5
+
+        if ship_laser_mesh.visible:
+            on_laser_hit(result, delta)
     else:
+        ship_laser_crosshair.position.y = ship_laser_max_distance
         remove_laser_mesh_material_override()
 
 func on_laser_hit(hit_info: Dictionary, delta: float):
