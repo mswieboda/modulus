@@ -1,7 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://bayc08vbvk1bo"]
+[gd_scene load_steps=17 format=3 uid="uid://bayc08vbvk1bo"]
 
 [ext_resource type="Script" uid="uid://b3nkvyjk8qajj" path="res://objs/ship/ship.gd" id="1_lmpqp"]
-[ext_resource type="PackedScene" uid="uid://d2a0t4o0m4scl" path="res://objs/ship/ship.blend" id="3_g2y22"]
+[ext_resource type="PackedScene" uid="uid://0qgxv01lns6" path="res://objs/ship/ship.blend" id="3_g2y22"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a061m"]
 size = Vector3(2, 2, 13)
@@ -20,8 +20,32 @@ albedo_color = Color(1, 0.4392157, 0, 1)
 height = 3.0
 radius = 7.0
 
+[sub_resource type="Curve" id="Curve_a061m"]
+_data = [Vector2(0.018348627, 0.97752815), 0.0, -1.004898, 0, 0, Vector2(1, 0), -1.0085927, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_g2y22"]
+curve = SubResource("Curve_a061m")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4geug"]
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_g2y22")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ucffe"]
+transparency = 1
+albedo_color = Color(0, 1, 1, 0.5803922)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_iqs6a"]
+material = SubResource("StandardMaterial3D_ucffe")
+height = 4.0
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g2y22"]
 shading_mode = 0
+albedo_color = Color(0, 1, 1, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_a061m"]
 material = SubResource("StandardMaterial3D_g2y22")
@@ -71,6 +95,36 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4310854, -8.99767)
 [node name="collision" type="CollisionShape3D" parent="ship_body/area"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.7157736)
 shape = SubResource("CylinderShape3D_a061m")
+
+[node name="engine_trails" type="Node3D" parent="ship_body"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="ship_body/engine_trails"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -3.6937275, -0.6861876, -1.0604775)
+amount = 32
+lifetime = 0.2
+process_material = SubResource("ParticleProcessMaterial_4geug")
+draw_pass_1 = SubResource("CylinderMesh_iqs6a")
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="ship_body/engine_trails"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -1.8823977, -0.6798799, -2.461983)
+amount = 32
+lifetime = 0.2
+process_material = SubResource("ParticleProcessMaterial_4geug")
+draw_pass_1 = SubResource("CylinderMesh_iqs6a")
+
+[node name="GPUParticles3D3" type="GPUParticles3D" parent="ship_body/engine_trails"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 3.713419, -0.6861876, -0.8689587)
+amount = 32
+lifetime = 0.2
+process_material = SubResource("ParticleProcessMaterial_4geug")
+draw_pass_1 = SubResource("CylinderMesh_iqs6a")
+
+[node name="GPUParticles3D4" type="GPUParticles3D" parent="ship_body/engine_trails"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 1.8813672, -0.67987996, -2.677441)
+amount = 64
+lifetime = 0.2
+process_material = SubResource("ParticleProcessMaterial_4geug")
+draw_pass_1 = SubResource("CylinderMesh_iqs6a")
 
 [node name="rotation_pivot" type="Node3D" parent="."]
 
