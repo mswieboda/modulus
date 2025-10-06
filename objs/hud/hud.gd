@@ -1,5 +1,6 @@
 extends Control
 
+@export var cursor_smoothness: float = 9.0
 @export var progress_chars: int = 25
 
 @onready var ship_resources_vbox: VBoxContainer = $margin/resources/vbox/ship_vbox
@@ -8,11 +9,22 @@ extends Control
 @onready var modding_controls_label: Label = $margin/view_info/vbox/modding_controls
 @onready var warp_info: Control = $margin/warp_info
 @onready var warp_progress_bar: ProgressBar = $margin/warp_info/hbox/warp_progress_bar
+@onready var cursor: TextureRect = $center/cursor
 
-func _process(_delta: float):
+func _process(delta: float):
+    update_cursor(delta)
     update_resources()
     update_ship_resources()
     update_dock_resources()
+
+func update_cursor(delta: float):
+    var mouse_pos = get_viewport().get_mouse_position()
+
+    # Get cursor size (from texture or custom minimum size)
+    var cursor_size = cursor.texture.get_size() if cursor.texture else cursor.size
+    var centered_pos = mouse_pos - cursor_size / 2.0
+
+    cursor.position = cursor.position.lerp(centered_pos, cursor_smoothness * delta)
 
 func update_resources():
     var resources = Resources.get_resources()
