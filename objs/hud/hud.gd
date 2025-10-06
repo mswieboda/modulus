@@ -2,7 +2,7 @@ extends Control
 
 @export var cursor_smoothness: float = 9.0
 @export var progress_chars: int = 25
-@export var warning_ratio_level: float = 0.75 # 0.15
+@export var warning_ratio_level: float = 0.15
 
 @onready var ship_resources_vbox: VBoxContainer = $margin/resources/vbox/ship_vbox
 @onready var dock_resources_vbox: VBoxContainer = $margin/resources/vbox/dock_vbox
