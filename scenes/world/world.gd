@@ -11,6 +11,7 @@ extends Node3D
 @export var warp_stop_speed: float = 10.0
 @export var warp_camera_static_smoothness: float = 0.69
 @export var warp_reset_duration: float = 1.0
+@export var warp_fuel_drain: float = 10.0
 
 @onready var hud: Control = $hud
 @onready var world_content: Node3D = $content
@@ -81,6 +82,9 @@ func close_modding_screen():
     Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 func check_warp_hold(delta: float):
+    if Resources.get_ship_resources()["warp_fuel"]["amount"] <= 0.0:
+        return
+
     if not is_warp_jumping and Input.is_action_pressed("warp_jump"):
         world_ship.is_warp_jumping = true
 
@@ -106,6 +110,8 @@ func check_warp_hold(delta: float):
 
 func on_warp_hold_complete():
     warp_hold_progress = 0.0
+
+    Resources.remove_from_ship("warp_fuel", warp_fuel_drain)
 
     # TODO: spawn a bunch of asteroids in the direction of the ship
     #       like a tunnel of small long horizontal capsules of different lengths
