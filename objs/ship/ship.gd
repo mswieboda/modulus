@@ -25,6 +25,8 @@ extends Node3D
 @onready var camera: Camera3D = get_node("rotation_pivot/camera")
 @onready var area: Area3D = $ship_body/area
 @onready var world: Node3D = get_parent().get_parent()
+@onready var dock_arrow: Node3D = $rotation_pivot/dock_arrow
+@onready var dock: Node3D = get_parent().get_node("dock")
 
 const RESOURCE_PARTICLE = preload("res://objs/resource_particle/resource_particle.tscn")
 
@@ -40,6 +42,9 @@ var is_launching_from_dock = false
 func _ready():
     view_center = get_viewport().get_visible_rect().size / 2
     area.area_entered.connect(_on_area_entered)
+
+func _process(delta: float):
+    point_dock_arrow(delta)
 
 func _physics_process(delta: float):
     if is_out_of_oxygen():
@@ -325,3 +330,6 @@ func drain_oxygen(delta: float):
 
 func is_out_of_oxygen():
     return Resources.get_ship_resources()["oxygen"]["amount"] <= 0.0
+
+func point_dock_arrow(delta: float):
+    dock_arrow.look_at(dock.global_position)

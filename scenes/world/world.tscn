@@ -41,6 +41,23 @@ environment = SubResource("Environment_t5ptc")
 
 [node name="ship" parent="content" instance=ExtResource("2_sl2e5")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 49.767094)
+speed = 300.0
+acceleration = 15.0
+strafe_speed = 1300.0
+reverse_speed = 1750.0
+boost_multiplier = 3.0
+friction = 10.0
+rotation_speed = 1000.0
+roll_speed = 1.5
+camera_smoothness = 3.0
+ship_laser_max_distance = 500.0
+mining_damage_per_second = 5.0
+dock_speed = 1.5
+dock_rotate_speed = 1.5
+dock_launch_speed = 5.0
+ship_fuel_speed_drain_ratio = 0.0001
+oxygen_drain_ratio_per_second = 0.5
+mine_laser_drain_ratio_per_second = 1.0
 
 [node name="asteroid_belt" type="Node3D" parent="content"]
 script = ExtResource("6_j2gmx")
