@@ -23,8 +23,8 @@ extends Node3D
 @onready var world_asteriod_belt: Node3D = $content/asteroid_belt
 @onready var modding_screen: Node3D = $modding_screen
 @onready var modding_screen_camera: Camera3D = $modding_screen/ship_moddable/rotation_pivot/camera
-@onready var world_ship_warp_charge_audio: AudioStreamPlayer3D = $content/ship/ship_body/engine_audio
-@onready var world_ship_warp_audio: AudioStreamPlayer3D = $content/ship/ship_body/engine_boost_audio
+@onready var world_ship_warp_charge_audio: AudioStreamPlayer3D = $content/ship/ship_body/warp_charge_audio
+@onready var world_ship_warp_audio: AudioStreamPlayer3D = $content/ship/ship_body/warp_audio
 
 var is_warp_jumping = false
 var warp_hold_progress: float = 0.0
