@@ -31,6 +31,8 @@ extends Node3D
 @onready var dock: Node3D = get_parent().get_node("dock")
 @onready var ship_laser_audio: AudioStreamPlayer3D = $ship_body/mine_gun/audio
 @onready var asteroid_grind_audio: AudioStreamPlayer3D = $ship_body/mine_gun/crosshair/asteroid_grind_audio
+@onready var engine_audio: AudioStreamPlayer3D = $ship_body/engine_audio
+@onready var engine_boost_audio: AudioStreamPlayer3D = $ship_body/engine_boost_audio
 
 const RESOURCE_PARTICLE = preload("res://objs/resource_particle/resource_particle.tscn")
 
@@ -135,8 +137,18 @@ func movement(delta: float):
             if Input.is_action_pressed("boost"): # Moving forward, boosting
                 current_speed *= boost_multiplier
 
+                if not engine_boost_audio.playing:
+                    engine_boost_audio.play()
+            else:
+                if not engine_audio.playing:
+                    engine_audio.play()
+
             # only move in Y dir (forward)
             move_direction = (forward * -input_dir.y)
+        else:
+            engine_boost_audio.stop()
+            engine_audio.stop()
+
         if input_dir.y > 0:  # Moving backward
             current_speed = reverse_speed * delta
         elif input_dir.x != 0 and input_dir.y == 0:  # Pure strafing
@@ -309,7 +321,11 @@ func move_to_dock(delta: float):
     var is_position_done = lerp_to_position(dock_target, delta * dock_speed)
     var is_rotation_done = lerp_to_rotation(Vector3.ZERO, delta * dock_speed)
 
+    if not engine_audio.playing:
+        engine_audio.play()
+
     if is_position_done and is_rotation_done:
+        engine_audio.stop()
         on_docked()
 
 func on_docked():
@@ -343,7 +359,12 @@ func on_dock_launch():
 
 func launch_from_dock(delta: float):
     var is_position_done = lerp_to_position(dock_launch_target.global_position, delta * dock_launch_speed, 0.5)
+
+    if not engine_audio.playing:
+        engine_audio.play()
+
     if is_position_done:
+        engine_audio.stop()
         is_launching_from_dock = false
         dock_launch_target = null
 
