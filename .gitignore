@@ -7,3 +7,6 @@
 
 # Blender
 *.blend1
+
+# build
+build/
