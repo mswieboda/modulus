@@ -44,6 +44,7 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0
 
 [node name="asteroid_belt" type="Node3D" parent="content"]
 script = ExtResource("6_j2gmx")
+spawn_distance_min = 110
 
 [node name="dock" parent="content" instance=ExtResource("8_j2gmx")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.5258789e-05, 0, -185)
