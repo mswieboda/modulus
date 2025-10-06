@@ -17,6 +17,7 @@ extends Node3D
 @export var ship_fuel_speed_drain_ratio: float = 0.0001
 @export var oxygen_drain_ratio_per_second: float = 0.5
 @export var mine_laser_drain_ratio_per_second: float = 1
+@export var transfer_duration: float = 0.25
 
 @onready var ship: CharacterBody3D = $ship_body
 @onready var ship_laser: Node3D = $ship_body/laser_raycast_point
@@ -39,6 +40,8 @@ var is_docking = false
 var dock_wait_progress = 0.0
 var is_docked = false
 var is_launching_from_dock = false
+var is_transfering_resources = false
+var transfer_progress = 0.0
 
 func _ready():
     view_center = get_viewport().get_visible_rect().size / 2
@@ -63,6 +66,7 @@ func _physics_process(delta: float):
         return
 
     if is_docked:
+        transfer_resources(delta)
         return
 
     if is_launching_from_dock:
@@ -293,21 +297,24 @@ func on_docked():
     is_docking = false
     dock_target = null
     dock_wait_progress = 0.0
+    is_docked = true
 
-    # TODO: uncomment this if modding screen is used
-    # is_docked = true
-
-    transfer_resources()
-
-    # TODO: comment this out if modding screen is used
-    on_dock_launch()
+    # instantaneous unlike ship_resources
+    # TODO: make iterative
+    Resources.store_dock_resources()
 
     if world.has_method("open_modding_screen"):
         world.open_modding_screen()
 
-func transfer_resources():
-    # TODO: do this with timers, make it delayed?
-    Resources.convert_resources_to_ship()
+func transfer_resources(delta: float):
+    transfer_progress = min(transfer_progress + delta, transfer_duration)
+
+    if transfer_progress >= transfer_duration:
+        var is_done = Resources.convert_one_resource_to_ship_iteratively()
+        transfer_progress = 0.0
+
+        if is_done:
+            on_dock_launch()
 
 func on_dock_launch():
     is_launching_from_dock = true
@@ -343,5 +350,5 @@ func drain_oxygen(delta: float):
 func is_out_of_oxygen():
     return Resources.get_ship_resources()["oxygen"]["amount"] <= 0.0
 
-func point_dock_arrow(delta: float):
+func point_dock_arrow(_delta: float):
     dock_arrow.look_at(dock.global_position)

@@ -4,7 +4,13 @@ var storage = 100.0
 var total = 0.0
 
 # key: String, value: float
-var resources: Dictionary = {}
+var resources: Dictionary = {
+    "carbon": 0.0,
+    "ice": 0.0,
+    "uranium": 0.0,
+    "copper": 0.0,
+    "iron": 0.0
+}
 var ship_resources: Dictionary = {
     "mining_laser": {
         "resource": "carbon",
@@ -224,10 +230,9 @@ func remove_from_ship(resource: String, amount_to_remove: float = 1.0) -> float:
 
     return amount_to_remove
 
-func convert_resources_to_ship():
+func store_dock_resources():
     for resource_key in resources.keys():
         var resource_amount = resources[resource_key]
-        var filtered_ship_resources = Dictionary()
 
         # store in dock (copper, iron)
         if dock_resources.has(resource_key):
@@ -238,6 +243,13 @@ func convert_resources_to_ship():
             remove(resource_key, resource_amount)
 
             continue
+
+func convert_one_resource_to_ship_iteratively() -> bool:
+    var is_done = true
+
+    for resource_key in resources.keys():
+        var resource_amount = resources[resource_key]
+        var filtered_ship_resources = Dictionary()
 
         # find ship_resources with resource
         for ship_resource_key in ship_resources:
@@ -254,22 +266,22 @@ func convert_resources_to_ship():
         # convert and transfer resource to ship resource
         var is_all_filled_max = false
 
-        # TODO: instead of looping through all the resource_amount
-        #       just do filtered_ship_resources.keys().size() at a time
-        #       and wait until next frame, after a delay to go again
-        #       to show visual progress bar go up, etc
-        while not is_all_filled_max and resource_amount >= RESOURCE_AMOUNT_DRAIN:
-            for ship_resource_key in filtered_ship_resources:
-                if resource_amount < RESOURCE_AMOUNT_DRAIN:
-                    continue
+        for ship_resource_key in filtered_ship_resources:
+            if resource_amount < RESOURCE_AMOUNT_DRAIN:
+                continue
 
-                var ship_resource = ship_resources[ship_resource_key]
-                var converted_amount = RESOURCE_AMOUNT_DRAIN * ship_resource["resource_ratio"]
-                var added = add_to_ship(ship_resource_key, converted_amount)
+            var ship_resource = ship_resources[ship_resource_key]
+            var converted_amount = RESOURCE_AMOUNT_DRAIN * ship_resource["resource_ratio"]
+            var added = add_to_ship(ship_resource_key, converted_amount)
 
-                if added > 0.0:
-                    is_all_filled_max = false
-                    resource_amount -= RESOURCE_AMOUNT_DRAIN
-                    remove(resource_key, RESOURCE_AMOUNT_DRAIN)
-                else:
-                    is_all_filled_max = true
+            if added > 0.0:
+                is_all_filled_max = false
+                resource_amount -= RESOURCE_AMOUNT_DRAIN
+                remove(resource_key, RESOURCE_AMOUNT_DRAIN)
+            else:
+                is_all_filled_max = true
+
+        # returns if done or not, for this resource
+        is_done = is_done and (is_all_filled_max or resource_amount <= RESOURCE_AMOUNT_DRAIN)
+
+    return is_done
