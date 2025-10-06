@@ -46,7 +46,6 @@ func spawn_asteroid(line_distance: float, chosen_resources):
     spawn_position.z = line_distance
 
     # choosing the resource
-    #var resource_types = Resources.get_resource_types()
     var percentage_choice = randi_range(1,100)
     var resources_index
     if percentage_choice <= 85:
@@ -76,17 +75,14 @@ func choose_room_resources():
         base_resource = "ice"
     else:
         base_resource = "carbon"
-    print(base_resource)
 
     chance = randi_range(2,4)
     primary_resource = resource_keys[chance]
-    print(primary_resource)
 
     var chance2 = randi_range(2,4)
     while chance2 != chance:
         chance2 = randi_range(2,4)
 
     secondary_resource = resource_keys[chance2]
-    print(secondary_resource)
 
     return [base_resource, primary_resource, secondary_resource]
