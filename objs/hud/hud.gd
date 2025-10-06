@@ -2,6 +2,7 @@ extends Control
 
 @export var cursor_smoothness: float = 9.0
 @export var progress_chars: int = 25
+@export var warning_ratio_level: float = 0.75 # 0.15
 
 @onready var ship_resources_vbox: VBoxContainer = $margin/resources/vbox/ship_vbox
 @onready var dock_resources_vbox: VBoxContainer = $margin/resources/vbox/dock_vbox
@@ -10,12 +11,19 @@ extends Control
 @onready var warp_info: Control = $margin/warp_info
 @onready var warp_progress_bar: ProgressBar = $margin/warp_info/hbox/warp_progress_bar
 @onready var cursor: TextureRect = $center/cursor
+@onready var warning_vignette: ColorRect = $warning_vignette
+@onready var warning_info: Control = $margin/warning_info
+@onready var warning_info_hbox: HBoxContainer = $margin/warning_info/vbox/hbox
+
+var is_warning_showing = false
 
 func _process(delta: float):
     update_cursor(delta)
     update_resources()
     update_ship_resources()
     update_dock_resources()
+
+    check_if_warning_should_show()
 
 func update_cursor(delta: float):
     var mouse_pos = get_viewport().get_mouse_position()
@@ -67,3 +75,36 @@ func progress_text(amount: float, total: float):
     text += "]"
 
     return text
+
+func check_if_warning_should_show():
+    var should_show = false
+    var ship_resources = Resources.get_ship_resources()
+
+    for key in ship_resources:
+        var data = ship_resources[key]
+        var ratio = float(data["amount"]) / data["max"]
+        var label = warning_info_hbox.get_node(key)
+
+        if ratio <= warning_ratio_level:
+            label.show()
+            should_show = true
+        else:
+            label.hide()
+
+    if is_warning_showing:
+        if not should_show:
+            hide_warning()
+        return
+
+    if should_show:
+        show_warning()
+
+func show_warning():
+    warning_info.show()
+    warning_vignette.show()
+    is_warning_showing = true
+
+func hide_warning():
+    is_warning_showing = false
+    warning_info.hide()
+    warning_vignette.hide()
