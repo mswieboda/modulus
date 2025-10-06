@@ -1,7 +1,7 @@
 extends Node3D
 
-@export var spawn_distance_min = 150
-@export var spawn_distance_max = 250
+@export var spawn_distance_min = 200
+@export var spawn_distance_max = 350
 @export var belt_width_min = 0.0
 @export var belt_width_max = 1000.0
 @export var belt_length_min = 15.0
