@@ -29,14 +29,14 @@ var warp_progress: float = 0.0
 var is_resetting_from_warp = false
 var warp_resetting_progress: float = 0.0
 
-func _ready():
-    # hide and disable modding screen initially
-    modding_screen.visible = false
-    modding_screen.process_mode = Node.PROCESS_MODE_DISABLED
+#func _ready():
+    ## hide and disable modding screen initially
+    #modding_screen.visible = false
+    #modding_screen.process_mode = Node.PROCESS_MODE_DISABLED
 
-func _input(event: InputEvent):
-    if event.is_action_pressed("modding") and modding_screen.visible:
-        close_modding_screen()
+#func _input(event: InputEvent):
+    #if event.is_action_pressed("modding") and modding_screen.visible:
+        #close_modding_screen()
 
 func _process(delta: float):
     if is_warp_jumping:
@@ -48,38 +48,38 @@ func _process(delta: float):
         check_warp_reset(delta)
 
 # called from ship.gd when docked
-func open_modding_screen():
-    # Switch visibility and cameras, switch hud info
-    world_content.visible = false
-    world_content.process_mode = Node.PROCESS_MODE_DISABLED
-    world_camera.current = false
-    hud.crosshair.hide()
-    hud.modding_controls_label.show()
-    hud.controls_label.hide()
-
-    modding_screen.visible = true
-    modding_screen.process_mode = Node.PROCESS_MODE_INHERIT
-    modding_screen_camera.current = true
-
-    Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
-func close_modding_screen():
-    # Switch back
-    modding_screen.visible = false
-    modding_screen.process_mode = Node.PROCESS_MODE_DISABLED
-    modding_screen_camera.current = false
-
-    world_content.visible = true
-    world_content.process_mode = Node.PROCESS_MODE_INHERIT
-    world_camera.current = true
-    hud.crosshair.show()
-    hud.modding_controls_label.hide()
-    hud.controls_label.show()
-
-    if world_ship.has_method("on_dock_launch"):
-        world_ship.on_dock_launch()
-
-    Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+#func open_modding_screen():
+    ## Switch visibility and cameras, switch hud info
+    #world_content.visible = false
+    #world_content.process_mode = Node.PROCESS_MODE_DISABLED
+    #world_camera.current = false
+    #hud.crosshair.hide()
+    #hud.modding_controls_label.show()
+    #hud.controls_label.hide()
+#
+    #modding_screen.visible = true
+    #modding_screen.process_mode = Node.PROCESS_MODE_INHERIT
+    #modding_screen_camera.current = true
+#
+    #Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+#
+#func close_modding_screen():
+    ## Switch back
+    #modding_screen.visible = false
+    #modding_screen.process_mode = Node.PROCESS_MODE_DISABLED
+    #modding_screen_camera.current = false
+#
+    #world_content.visible = true
+    #world_content.process_mode = Node.PROCESS_MODE_INHERIT
+    #world_camera.current = true
+    #hud.crosshair.show()
+    #hud.modding_controls_label.hide()
+    #hud.controls_label.show()
+#
+    #if world_ship.has_method("on_dock_launch"):
+        #world_ship.on_dock_launch()
+#
+    #Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 func check_warp_hold(delta: float):
     if Resources.get_ship_resources()["warp_fuel"]["amount"] <= 0.0:

@@ -271,7 +271,6 @@ func _on_area_entered(other_area: Area3D):
         return
 
     if other_area.is_in_group("dock"):
-        var dock = other_area.get_parent_node_3d()
         dock_launch_target = dock.get_node("launch_target")
         dock_target = other_area.global_position
         is_docking = true
@@ -287,8 +286,14 @@ func on_docked():
     is_docking = false
     dock_target = null
     dock_wait_progress = 0.0
-    is_docked = true
+
+    # TODO: uncomment this if modding screen is used
+    # is_docked = true
+
     transfer_resources()
+
+    # TODO: comment this out if modding screen is used
+    on_dock_launch()
 
     if world.has_method("open_modding_screen"):
         world.open_modding_screen()
