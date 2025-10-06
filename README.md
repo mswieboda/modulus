@@ -1,5 +1,5 @@
-# LD 54 practice
-3D horizontal platformer, for practice
+# space rocks
+3D space asteroid miner
 
 WIP screenshot:
 
