@@ -26,6 +26,7 @@ Resources="*res://globals/resources.gd"
 
 window/size/mode=2
 window/size/resizable=false
+window/size/borderless=true
 
 [importer_defaults]
 
