@@ -44,6 +44,7 @@ var is_docked = false
 var is_launching_from_dock = false
 var is_transfering_resources = false
 var transfer_progress = 0.0
+var is_mission_complete = false
 
 func _ready():
     view_center = get_viewport().get_visible_rect().size / 2
@@ -321,6 +322,8 @@ func on_docked():
     # TODO: make iterative
     Resources.store_dock_resources()
 
+    check_mission_complete()
+
     if world.has_method("open_modding_screen"):
         world.open_modding_screen()
 
@@ -331,7 +334,7 @@ func transfer_resources(delta: float):
         var is_done = Resources.convert_one_resource_to_ship_iteratively()
         transfer_progress = 0.0
 
-        if is_done:
+        if is_done && not is_mission_complete:
             on_dock_launch()
 
 func on_dock_launch():
@@ -370,3 +373,7 @@ func is_out_of_oxygen():
 
 func point_dock_arrow(_delta: float):
     dock_arrow.look_at(dock.global_position)
+
+func check_mission_complete():
+    if Resources.is_mission_complete():
+        is_mission_complete = true

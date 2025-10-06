@@ -14,8 +14,10 @@ extends Control
 @onready var warning_vignette: ColorRect = $warning_vignette
 @onready var warning_info: Control = $margin/warning_info
 @onready var warning_info_hbox: HBoxContainer = $margin/warning_info/vbox/hbox
+@onready var mission_complete_label: Label = $center/mission_complete
 
 var is_warning_showing = false
+var is_mission_complete = false
 
 func _process(delta: float):
     update_cursor(delta)
@@ -24,6 +26,12 @@ func _process(delta: float):
     update_dock_resources()
 
     check_if_warning_should_show()
+    check_mission_complete()
+
+    if is_mission_complete:
+        mission_complete_label.show()
+    else:
+        mission_complete_label.hide()
 
 func update_cursor(delta: float):
     var mouse_pos = get_viewport().get_mouse_position()
@@ -58,8 +66,9 @@ func update_dock_resources():
     for key in dock_resources:
         var node = dock_resources_vbox.find_child(key)
         var value = dock_resources[key]
+        var mission_amount = Resources.get_mission_amounts()[key]
 
-        node.text = "%s: %d" % [key, value]
+        node.text = "%s: %d/%d" % [key, value, mission_amount]
 
 func set_progress(label: String, amount: float, total: float):
     var text_node = ship_resources_vbox.find_child(label)
@@ -108,3 +117,7 @@ func hide_warning():
     is_warning_showing = false
     warning_info.hide()
     warning_vignette.hide()
+
+func check_mission_complete():
+    if Resources.is_mission_complete():
+        is_mission_complete = true

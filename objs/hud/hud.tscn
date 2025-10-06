@@ -230,6 +230,20 @@ reset camera [R]
 pause [ESC]"
 horizontal_alignment = 2
 
+[node name="mission_info" type="Label" parent="margin/view_info/vbox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5176471, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 18
+text = "
+
+mission:
+collect resources and
+store at the dock:
+- copper: 100
+- iron: 100"
+horizontal_alignment = 2
+
 [node name="warp_info" type="Control" parent="margin"]
 visible = false
 layout_mode = 2
@@ -347,3 +361,13 @@ custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("3_5eihx")
 expand_mode = 1
+
+[node name="mission_complete" type="Label" parent="center"]
+visible = false
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("2_5eihx")
+theme_override_font_sizes/font_size = 64
+text = "MISSION
+COMPELTE"
+horizontal_alignment = 1

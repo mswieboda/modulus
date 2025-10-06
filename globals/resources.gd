@@ -3,7 +3,11 @@ extends Node
 var storage = 100.0
 var total = 0.0
 
-# key: String, value: float
+var mission_amounts: Dictionary = {
+    "copper": 100.0,
+    "iron": 100.0
+}
+
 var resources: Dictionary = {
     "carbon": 0.0,
     "ice": 0.0,
@@ -11,6 +15,7 @@ var resources: Dictionary = {
     "copper": 0.0,
     "iron": 0.0
 }
+
 var ship_resources: Dictionary = {
     "mining_laser": {
         "resource": "carbon",
@@ -37,10 +42,12 @@ var ship_resources: Dictionary = {
         "max": 30.0
     }
 }
+
 var dock_resources: Dictionary = {
     "copper": 0.0,
     "iron": 0.0
 }
+
 var resource_materials: Dictionary = {
     "carbon": ROCK_MATERIAL,
     "ice": ICE_MATERIAL,
@@ -65,6 +72,55 @@ const ASTERIOD_SCALE_MIN = 0.3
 const ASTERIOD_SCALE_MAX = 3.0
 const RESOURCE_AMOUNT_DRAIN = 1.0
 
+func reset():
+    storage = 100.0
+    total = 0.0
+
+    mission_amounts = {
+        "copper": 100.0,
+        "iron": 100.0
+    }
+
+    resources = {
+        "carbon": 0.0,
+        "ice": 0.0,
+        "uranium": 0.0,
+        "copper": 0.0,
+        "iron": 0.0
+    }
+
+    ship_resources = {
+        "mining_laser": {
+            "resource": "carbon",
+            "resource_ratio": 5.0,
+            "amount": 100.0,
+            "max": 100.0
+        },
+        "oxygen": {
+            "resource": "ice",
+            "resource_ratio": 10.0,
+            "amount": 100.0,
+            "max": 100.0
+        },
+        "ship_fuel": {
+            "resource": "ice",
+            "resource_ratio": 5.0,
+            "amount": 100.0,
+            "max": 100.0
+        },
+        "warp_fuel": {
+            "resource": "uranium",
+            "resource_ratio": 2.0,
+            "amount": 30.0,
+            "max": 30.0
+        }
+    }
+
+    dock_resources = {
+        "copper": 0.0,
+        "iron": 0.0
+    }
+
 func get_resources() -> Dictionary:
     return resources
 
@@ -76,6 +132,9 @@ func get_ship_resources() -> Dictionary:
 
 func get_dock_resources() -> Dictionary:
     return dock_resources
+
+func get_mission_amounts() -> Dictionary:
+    return mission_amounts
 
 func get_count(resource: String) -> float:
     var count = resources.get(resource)
@@ -279,5 +338,17 @@ func convert_one_resource_to_ship_iteratively() -> bool:
 
         # returns if done or not, for this resource
         is_done = is_done and (is_all_filled_max or resource_amount <= RESOURCE_AMOUNT_DRAIN)
+
+    return is_done
+
+func is_mission_complete() -> bool:
+    var is_done = false
+
+    for key in dock_resources:
+        var amount = dock_resources[key]
+        var mission_amount = mission_amounts[key]
+
+        if amount >= mission_amount:
+            is_done = true
 
     return is_done

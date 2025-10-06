@@ -53,6 +53,9 @@ func _on_resume_button_pressed() -> void:
 func _on_quit_button_pressed() -> void:
     # Unpause before changing scenes
     get_tree().paused = false
+
+    Resources.reset()
+
     # Return to main menu
     get_tree().change_scene_to_file(MAIN_MENU_SCENE)
 
