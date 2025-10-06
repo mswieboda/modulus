@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bayc08vbvk1bo"]
+[gd_scene load_steps=19 format=3 uid="uid://bayc08vbvk1bo"]
 
 [ext_resource type="Script" uid="uid://b3nkvyjk8qajj" path="res://objs/ship/ship.gd" id="1_lmpqp"]
 [ext_resource type="PackedScene" uid="uid://0qgxv01lns6" path="res://objs/ship/ship.blend" id="3_g2y22"]
@@ -42,6 +42,25 @@ albedo_color = Color(0, 1, 1, 0.5803922)
 [sub_resource type="CylinderMesh" id="CylinderMesh_iqs6a"]
 material = SubResource("StandardMaterial3D_ucffe")
 height = 4.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a061m"]
+emission_shape_offset = Vector3(0, 250, 0)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 50.0
+emission_ring_inner_radius = 10.0
+emission_ring_cone_angle = 90.0
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 300.0
+initial_velocity_max = 300.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_g2y22"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 50.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g2y22"]
 shading_mode = 0
@@ -125,6 +144,14 @@ amount = 64
 lifetime = 0.2
 process_material = SubResource("ParticleProcessMaterial_4geug")
 draw_pass_1 = SubResource("CylinderMesh_iqs6a")
+
+[node name="Warp_particles" type="GPUParticles3D" parent="ship_body"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+emitting = false
+amount = 300
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_a061m")
+draw_pass_1 = SubResource("CylinderMesh_g2y22")
 
 [node name="rotation_pivot" type="Node3D" parent="."]
 
