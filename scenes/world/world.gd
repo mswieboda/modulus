@@ -11,7 +11,7 @@ extends Node3D
 @export var warp_stop_speed: float = 10.0
 @export var warp_camera_static_smoothness: float = 0.69
 @export var warp_reset_duration: float = 1.0
-@export var warp_fuel_drain: float = 10.0
+@export var warp_fuel_drain: float = 5.0
 
 @onready var hud: Control = $hud
 @onready var world_content: Node3D = $content
