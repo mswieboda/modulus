@@ -46,4 +46,4 @@ func rotation(delta: float):
         rotate_pivot(transform_basis.z, -delta, speed)
 
 func rotate_pivot(axis: Vector3, direction_delta: float, speed):
-    rotation_pivot.global_rotate(axis, direction_delta * speed)
+    rotation_pivot.global_rotate(axis.normalized(), direction_delta * speed)
