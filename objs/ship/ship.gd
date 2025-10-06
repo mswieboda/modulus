@@ -14,7 +14,8 @@ extends Node3D
 @export var dock_speed: float = 1.5
 @export var dock_rotate_speed: float = 1.5
 @export var dock_launch_speed: float = 5.0
-@export var ship_fuel_speed_ratio: float = 0.0001
+@export var ship_fuel_speed_drain_ratio: float = 0.0001
+@export var oxygen_drain_ratio_per_second: float = 0.5
 
 @onready var ship: CharacterBody3D = $ship_body
 @onready var ship_laser: Node3D = $ship_body/laser_raycast_point
@@ -40,6 +41,10 @@ func _ready():
     area.area_entered.connect(_on_area_entered)
 
 func _physics_process(delta: float):
+    if is_out_of_oxygen():
+        # TODO: display on HUD you're out of oxygen
+        return
+
     if is_warp_jumping:
         rotation_pivot_follow_rotation(delta)
         return
@@ -60,11 +65,13 @@ func _physics_process(delta: float):
 
     rotation(delta)
     rotation_pivot_follow_rotation(delta)
+
     movement(delta)
     move_to_ship(delta)
 
     mine_laser_input()
     raycast_from_laser(delta)
+    drain_oxygen(delta)
 
 func rotation(delta: float):
     var mouse_pos = get_viewport().get_mouse_position()
@@ -121,7 +128,7 @@ func movement(delta: float):
         elif input_dir.x != 0 and input_dir.y == 0:  # Pure strafing
             current_speed = strafe_speed * delta
 
-        Resources.remove_from_ship("ship_fuel", current_speed * ship_fuel_speed_ratio)
+        Resources.remove_from_ship("ship_fuel", current_speed * ship_fuel_speed_drain_ratio)
 
         # Apply velocity in all 3 axes
         ship.velocity = move_direction * current_speed
@@ -305,3 +312,9 @@ func lerp_to_rotation(target: Vector3, lerp_speed: float, threshold: float = 0.1
         return true
 
     return false
+
+func drain_oxygen(delta: float):
+    Resources.remove_from_ship("oxygen", delta * oxygen_drain_ratio_per_second)
+
+func is_out_of_oxygen():
+    return Resources.get_ship_resources()["oxygen"]["amount"] <= 0.0
