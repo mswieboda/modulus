@@ -29,6 +29,7 @@ extends Node3D
 @onready var world: Node3D = get_parent().get_parent()
 @onready var dock_arrow: Node3D = $rotation_pivot/dock_arrow
 @onready var dock: Node3D = get_parent().get_node("dock")
+@onready var ship_laser_audio: AudioStreamPlayer3D = $ship_body/mine_gun/audio
 
 const RESOURCE_PARTICLE = preload("res://objs/resource_particle/resource_particle.tscn")
 
@@ -176,6 +177,14 @@ func mining_laser_input():
 func raycast_from_laser(delta: float):
     if ship_laser_mesh.visible:
         Resources.remove_from_ship("mining_laser", delta * mine_laser_drain_ratio_per_second)
+
+        ship_laser_audio.stream_paused = false
+
+        if not ship_laser_audio.playing:
+            ship_laser_audio.play()
+    else:
+        if ship_laser_audio.playing:
+            ship_laser_audio.stream_paused = true
 
     var ray_origin: Vector3 = ship_laser.global_position
     var ray_direction: Vector3 = -ship_laser.global_transform.basis.z
