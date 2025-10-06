@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://cdstsqvisrcbb"]
 
-[ext_resource type="Texture2D" uid="uid://b6eurqgu20lbe" path="res://scenes/world/space.hdr" id="1_1fp7r"]
+[ext_resource type="Texture2D" uid="uid://d1s4mhg511xcj" path="res://scenes/world/space.hdr" id="1_1fp7r"]
 [ext_resource type="Script" uid="uid://4ed6o3ujwreu" path="res://scenes/world/world.gd" id="1_bq33v"]
 [ext_resource type="PackedScene" uid="uid://c17e7ny0b65ei" path="res://objs/pause_menu/pause_menu.tscn" id="1_dphjl"]
 [ext_resource type="PackedScene" uid="uid://bayc08vbvk1bo" path="res://objs/ship/ship.tscn" id="2_sl2e5"]

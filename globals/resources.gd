@@ -146,7 +146,7 @@ func get_resource_types():
 func get_material(resource: String):
     return resource_materials.get(resource)
 
-func create_asteroid(spawn_position: Vector3):
+func create_asteroid(spawn_position: Vector3, resource: String):
     # choose a model and instantiate
     var model = randi_range(0, ASTERIODS.size() - 1)
     var asteroid: Node3D = ASTERIODS[model].instantiate()
@@ -163,11 +163,7 @@ func create_asteroid(spawn_position: Vector3):
     var scale_amount = randf_range(ASTERIOD_SCALE_MIN, ASTERIOD_SCALE_MAX)
     asteroid.scale = Vector3(scale_amount, scale_amount, scale_amount)
 
-    # choosing the resource
-    var resource_types = get_resource_types()
-    var resources_index = randi_range(0, resource_types.size() - 1)
-    var resource = resource_types[resources_index]
-
+    #apply the resource to the asteroid
     if asteroid.has_method("change_resource"):
         asteroid.change_resource(resource)
         asteroid.change_amount(RESOURCE_AMOUNT_SCALE_RATIO * scale_amount)
