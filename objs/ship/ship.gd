@@ -30,6 +30,7 @@ extends Node3D
 @onready var dock_arrow: Node3D = $rotation_pivot/dock_arrow
 @onready var dock: Node3D = get_parent().get_node("dock")
 @onready var ship_laser_audio: AudioStreamPlayer3D = $ship_body/mine_gun/audio
+@onready var asteroid_grind_audio: AudioStreamPlayer3D = $ship_body/mine_gun/crosshair/asteroid_grind_audio
 
 const RESOURCE_PARTICLE = preload("res://objs/resource_particle/resource_particle.tscn")
 
@@ -216,14 +217,22 @@ func raycast_from_laser(delta: float):
 
         if ship_laser_mesh.visible:
             on_laser_hit(result, delta)
+        else:
+            asteroid_grind_audio.stream_paused = true
     else:
         ship_laser_crosshair.position.y = ship_laser_max_distance
         remove_laser_mesh_material_override()
+        asteroid_grind_audio.stream_paused = true
 
 func on_laser_hit(hit_info: Dictionary, delta: float):
     var hit_object: Node3D = hit_info.collider
 
     if hit_object.has_method("mine"):
+        if not asteroid_grind_audio.playing:
+            asteroid_grind_audio.play()
+
+        asteroid_grind_audio.stream_paused = false
+
         change_laser_mesh_material_to_green()
 
         # TODO: some visual progress bar, circlular like BoTW sprint, or NMS mining
