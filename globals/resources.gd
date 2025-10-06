@@ -31,6 +31,10 @@ var ship_resources: Dictionary = {
         "max": 30.0
     }
 }
+var dock_resources: Dictionary = {
+    "copper": 0.0,
+    "iron": 0.0
+}
 var resource_materials: Dictionary = {
     "carbon": ROCK_MATERIAL,
     "ice": ICE_MATERIAL,
@@ -63,6 +67,9 @@ func get_storage() -> float:
 
 func get_ship_resources() -> Dictionary:
     return ship_resources
+
+func get_dock_resources() -> Dictionary:
+    return dock_resources
 
 func get_count(resource: String) -> float:
     var count = resources.get(resource)
@@ -100,6 +107,7 @@ func remove(resource: String, amount: float = 1.0) -> float:
 
     if count - amount <= 0.0:
         resources.set(resource, 0.0)
+        total -= count
         return amount - count
 
     if amount <= 0.0:
@@ -221,6 +229,17 @@ func convert_resources_to_ship():
         var resource_amount = resources[resource_key]
         var filtered_ship_resources = Dictionary()
 
+        # store in dock (copper, iron)
+        if dock_resources.has(resource_key):
+            var amount = dock_resources[resource_key]
+
+            amount += resource_amount
+            dock_resources.set(resource_key, amount)
+            remove(resource_key, resource_amount)
+
+            continue
+
+        # find ship_resources with resource
         for ship_resource_key in ship_resources:
             var ship_resource = ship_resources[ship_resource_key]
 
@@ -232,12 +251,13 @@ func convert_resources_to_ship():
         if filtered_ship_resources.keys().is_empty():
             continue
 
+        # convert and transfer resource to ship resource
+        var is_all_filled_max = false
+
         # TODO: instead of looping through all the resource_amount
         #       just do filtered_ship_resources.keys().size() at a time
         #       and wait until next frame, after a delay to go again
         #       to show visual progress bar go up, etc
-        var is_all_filled_max = false
-
         while not is_all_filled_max and resource_amount >= RESOURCE_AMOUNT_DRAIN:
             for ship_resource_key in filtered_ship_resources:
                 if resource_amount < RESOURCE_AMOUNT_DRAIN:
