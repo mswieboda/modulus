@@ -342,13 +342,11 @@ func convert_one_resource_to_ship_iteratively() -> bool:
     return is_done
 
 func is_mission_complete() -> bool:
-    var is_done = false
-
     for key in dock_resources:
         var amount = dock_resources[key]
         var mission_amount = mission_amounts[key]
 
-        if amount >= mission_amount:
-            is_done = true
+        if amount < mission_amount:
+            return false
 
-    return is_done
+    return true
