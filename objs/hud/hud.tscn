@@ -187,8 +187,8 @@ move [W A S D]
 turn [MOUSE]
 roll [Q E]
 boost [SHIFT]
-mine [SPACE / L MOUSE]
-
+mine [L MOUSE BUTTON]
+warp [hold SPACE]
 pause [ESC]"
 horizontal_alignment = 2
 
